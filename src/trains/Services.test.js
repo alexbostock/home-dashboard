@@ -73,14 +73,12 @@ it('renders information about each service', () => {
     const text = rendered.textContent;
 
     if (service.scheduledDepartureTime === service.realDepartureTime) {
-      expect(text.includes('on-time')).toBe(true);
+      expect(text.includes('On-time')).toBe(true);
     } else {
       expect(text.includes('late')).toBe(true);
     }
 
-    expect(text.includes(
-      service.scheduledDepartureTime + ' ' + service.destination
-    )).toBe(true);
+    expect(text.includes(service.scheduledDepartureTime)).toBe(true);
     
     expect(text.includes(service.platform)).toBe(true);
     expect(text.includes(service.operator)).toBe(true);
