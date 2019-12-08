@@ -6,6 +6,7 @@ import { serialize, deserialize } from 'json-immutable';
 import './App.css';
 import TrainTimes from './trains/TrainTimes';
 import Bookmarks from './bookmarks/Bookmarks';
+import Xkcd from './xkcd/Xkcd';
 
 class App extends React.Component {
   constructor() {
@@ -45,6 +46,8 @@ class App extends React.Component {
             arrivals={config.get('arrivals')}
           />
         );
+      case 'xkcd':
+        return <Xkcd key={config} />;
       default:
         console.error(`Invalid widget type: ${config.get('type')}`);
         return null;
@@ -72,6 +75,9 @@ function defaultState() {
         type: 'live-trains',
         station: 'STP',
         arrivals: false,
+      }),
+      Map({
+        type: 'xkcd',
       }),
     ]),
   });

@@ -2,7 +2,8 @@ import React from 'react';
 import { render, unmountComponentAtNode } from 'react-dom';
 import { act } from 'react-dom/test-utils';
 
-import App from './app';
+import Xkcd from './xkcd';
+import { isTSAnyKeyword, exportAllDeclaration } from '@babel/types';
 
 let container = null;
 beforeEach(() => {
@@ -16,17 +17,10 @@ afterEach(() => {
   container = null;
 });
 
-it('renders one of each widget by default', () => {
+it('renders a heading', () => {
   act(() => {
-    render(<App />, container);
+    render(<Xkcd />, container);
   });
-
-  const renderedText = container.textContent;
-
-  expect(renderedText.includes('Bookmarks'))
-    .toBe(true);
-  expect(renderedText.includes('Live Trains'))
-    .toBe(true);
-  expect(renderedText.includes('Latest XKCD'))
-    .toBe(true);
+  const heading = container.getElementsByTagName('h3')[0];
+  expect(heading.textContent).toBe('Latest XKCD');
 });
