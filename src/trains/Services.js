@@ -37,7 +37,9 @@ function renderService(service) {
 }
 
 function ontimenessMessage(scheduled, actual) {
-  if (scheduled === actual) {
+  if (actual === null || actual === undefined) {
+    return 'Live data not available';
+  } else if (scheduled === actual) {
     return <span className="ontime">On-time</span>;
   } else {
     const minsLate = actual - scheduled;
