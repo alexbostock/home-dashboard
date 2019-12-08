@@ -18,9 +18,10 @@ afterEach(() => {
   container = null;
 });
 
-it('renders a hello world message', () => {
+it('renders a TrainTimes component by default', () => {
   act(() => {
     render(<App />, container);
   });
-  expect(container.textContent).toBe('Hello, World!');
+  expect(container.textContent.includes('Live Trains'))
+    .toBe(true);
 });
