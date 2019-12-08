@@ -16,10 +16,12 @@ afterEach(() => {
   container = null;
 });
 
-it('renders a TrainTimes component by default', () => {
+it('renders Bookmarks and TrainTimes by default', () => {
   act(() => {
     render(<App />, container);
   });
+  expect(container.textContent.includes('Bookmarks'))
+    .toBe(true);
   expect(container.textContent.includes('Live Trains'))
     .toBe(true);
 });

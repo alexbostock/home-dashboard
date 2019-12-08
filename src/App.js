@@ -5,6 +5,7 @@ import { serialize, deserialize } from 'json-immutable';
 
 import './App.css';
 import TrainTimes from './trains/TrainTimes';
+import Bookmarks from './bookmarks/Bookmarks';
 
 class App extends React.Component {
   constructor() {
@@ -29,6 +30,13 @@ class App extends React.Component {
 
   renderWidget(config) {
     switch (config.get('type')) {
+      case 'bookmarks':
+        return (
+          <Bookmarks
+            key={config}
+            items={config.get('items')}
+          />
+        );
       case 'live-trains':
         return (
           <TrainTimes
@@ -54,6 +62,12 @@ class App extends React.Component {
 function defaultState() {
   return Map({
     widgets: List([
+      Map({
+        type: 'bookmarks',
+        items: List([
+          Map({name: 'Google', url: 'https://google.com'}),
+        ]),
+      }),
       Map({
         type: 'live-trains',
         station: 'STP',
