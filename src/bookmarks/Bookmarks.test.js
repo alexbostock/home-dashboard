@@ -25,7 +25,7 @@ it('renders a heading', () => {
   });
   const heading = container.getElementsByTagName('h3')[0];
   expect(heading.textContent).toBe('Bookmarks');
-})
+});
 
 it('renders a message when no bookmarks are given', () => {
   act(() => {
