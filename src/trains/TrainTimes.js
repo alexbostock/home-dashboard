@@ -17,13 +17,16 @@ class TrainTimes extends React.PureComponent {
   render() {
     let body
     if (this.props.station) {
-      body = <Services trains={this.state.trains} />;
+      body = <Services
+        trains={this.state.trains}
+        arrivals={this.props.arrivals}
+      />;
     } else {
       body = <p>No station specified.</p>;
     }
 
     return (
-      <div>
+      <div className="widget">
         <h3>Live Trains</h3>
         {body}
       </div>

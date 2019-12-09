@@ -67,7 +67,7 @@ it('renders information about each service', () => {
   })
 
   exampleTrains.services.forEach((service, index) => {
-    const rendered = container.getElementsByClassName('service')[index];
+    const rendered = container.getElementsByClassName('train-service')[index];
     const text = rendered.textContent;
 
     if (service.scheduledTime === service.realTime) {

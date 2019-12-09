@@ -8,10 +8,12 @@ function Services(props) {
   const services = props.trains.services.slice(0, 3)
     .sort((a, b) => a.realTime - b.realTime)
     .map(renderService);
+  
+  const caption = props.arrivals ? 'Arrivals at' : 'Departures from';
 
   return (
     <div>
-      <p>{props.trains.location}</p>
+      <p>{caption} {props.trains.location}</p>
       <table>
         {services}
       </table>
@@ -24,7 +26,7 @@ function renderService(service) {
     service.scheduledTime, service.realTime);
   return (
     <tbody
-      className="service"
+      className="train-service"
       key={service.scheduledTime + service.destination}
     >
       <tr>
@@ -35,7 +37,7 @@ function renderService(service) {
         <td>Platform {service.platform}</td>
         <td>{ontimeness}</td>
       </tr>
-      <tr><td>{service.operator}</td></tr>
+      <tr><td colSpan="2">{service.operator}</td></tr>
     </tbody>
   );
 }
@@ -47,7 +49,12 @@ function ontimenessMessage(scheduled, actual) {
     return <span className="ontime">On-time</span>;
   } else {
     const minsLate = actual - scheduled;
-    const msg = `${minsLate} minute${minsLate > 1 ? 's' : ''} late`;
+    let msg;
+    if (minsLate > 0) {
+      msg = `${minsLate} minute${minsLate > 1 ? 's' : ''} late`;
+    } else {
+      msg = `${-minsLate} minutes${-minsLate > 1 ? 's' : ''} early`
+    }
     return <span className="delayed">{msg}</span>;
   }
 }
