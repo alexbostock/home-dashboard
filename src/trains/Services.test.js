@@ -22,24 +22,24 @@ const exampleTrains = {
     {
       destination: "Sutton (Surrey)",
       arrived: true,
-      scheduledDepartureTime: 727,
-      realDepartureTime: 728,
+      scheduledTime: 727,
+      realTime: 728,
       platform: "A",
       operator: "Thameslink",
     },
     {
       destination: "Cambridge",
       arrived: false,
-      scheduledDepartureTime: 731,
-      realDepartureTime: 731,
+      scheduledTime: 731,
+      realTime: 731,
       platform: "B",
       operator: "Thameslink",
     },
     {
       destination: "Rainham (Kent)",
       arrived: false,
-      scheduledDepartureTime: 732,
-      realDepartureTime: 732,
+      scheduledTime: 732,
+      realTime: 732,
       platform: "A",
       operator: "Thameslink",
     },
@@ -70,13 +70,13 @@ it('renders information about each service', () => {
     const rendered = container.getElementsByClassName('service')[index];
     const text = rendered.textContent;
 
-    if (service.scheduledDepartureTime === service.realDepartureTime) {
+    if (service.scheduledTime === service.realTime) {
       expect(text.includes('On-time')).toBe(true);
     } else {
       expect(text.includes('late')).toBe(true);
     }
 
-    expect(text.includes(service.scheduledDepartureTime)).toBe(true);
+    expect(text.includes(service.scheduledTime)).toBe(true);
     
     expect(text.includes(service.platform)).toBe(true);
     expect(text.includes(service.operator)).toBe(true);

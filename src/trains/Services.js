@@ -5,11 +5,15 @@ function Services(props) {
     return <p>No data.</p>;
   }
 
+  const services = props.trains.services.slice(0, 3)
+    .sort((a, b) => a.realTime - b.realTime)
+    .map(renderService);
+
   return (
     <div>
       <p>{props.trains.location}</p>
       <table>
-        {props.trains.services.slice(0, 3).map(renderService)}
+        {services}
       </table>
     </div>
   );
@@ -17,14 +21,14 @@ function Services(props) {
 
 function renderService(service) {
   const ontimeness = ontimenessMessage(
-    service.scheduledDepartureTime, service.realDepartureTime);
+    service.scheduledTime, service.realTime);
   return (
     <tbody
       className="service"
-      key={service.scheduledDepartureTime + service.destination}
+      key={service.scheduledTime + service.destination}
     >
       <tr>
-        <th>{leftpad(service.scheduledDepartureTime)}</th>
+        <th>{leftpad(service.scheduledTime)}</th>
         <th>{service.destination}</th>
       </tr>
       <tr>
