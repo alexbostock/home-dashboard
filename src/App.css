@@ -17,17 +17,26 @@ ul {
     padding: 0;
 }
 
+img {
+    max-width: 100%;
+}
+
+a {
+    color: inherit;
+    text-decoration: none;
+}
+
 .app {
     display: grid;
 }
 
-@media (min-width: 900px) {
+@media (min-width: 800px) {
     .app {
         grid-template-columns: repeat(2, 1fr);
     }
 }
 
-@media (min-width: 1280px) {
+@media (min-width: 1200px) {
     .app {
         grid-template-columns: repeat(3, 1fr);
     }
@@ -48,9 +57,7 @@ ul {
 }
 
 .bookmark > a {
-    color: inherit;
     font-weight: bold;
-    text-decoration: none;
 
     display: block;
     padding: 0.8em;
@@ -75,4 +82,12 @@ ul {
 
 .train-service > tr > *:nth-child(2) {
     text-align: right;
+}
+
+.xkcd-link {
+    display: block;
+}
+
+.xkcd-link:hover {
+    color: rgb(85, 85, 85);
 }

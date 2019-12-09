@@ -30,7 +30,7 @@ class Xkcd extends React.PureComponent {
     return (
       <div className="widget">
         <h3>Latest XKCD</h3>
-        {body}
+        <a href="https://xkcd.com" className="xkcd-link">{body}</a>
       </div>
     );
   }
