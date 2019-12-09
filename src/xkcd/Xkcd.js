@@ -13,7 +13,6 @@ class Xkcd extends React.PureComponent {
   render() {
     let body;
     if (this.state.comic) {
-      console.log(this.state.comic);
       body = (
         <div>
           <h4>{this.state.comic.title}</h4>
