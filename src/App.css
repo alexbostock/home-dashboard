@@ -1,0 +1,78 @@
+body {
+    font-family: Helvetica Neue, Helvetica, Arial, sans-serif;
+}
+
+table {
+    border-collapse: collapse;
+    width: 100%;
+}
+
+td, th {
+    padding: 0.4em;
+    width: min-content;
+}
+
+ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+.app {
+    display: grid;
+}
+
+@media (min-width: 900px) {
+    .app {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (min-width: 1280px) {
+    .app {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
+
+.widget {
+    border: 1px solid black;
+    margin: 1em;
+    padding: 1em;
+}
+
+.widget > h3 {
+    margin-top: 0;
+}
+
+.bookmark {
+    width: 100%;
+}
+
+.bookmark > a {
+    color: inherit;
+    font-weight: bold;
+    text-decoration: none;
+
+    display: block;
+    padding: 0.8em;
+    border: 1px solid black;
+    border-radius: 0.4em;
+
+    margin-bottom: 1em;
+    text-align: center;
+}
+
+.bookmark > a:hover {
+    border-color: darkgrey;
+}
+
+.train-service {
+    border: 1px solid black;
+}
+
+.train-service > tr > *:nth-child(1) {
+    text-align: left;
+}
+
+.train-service > tr > *:nth-child(2) {
+    text-align: right;
+}

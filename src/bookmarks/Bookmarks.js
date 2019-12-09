@@ -4,9 +4,11 @@ class Bookmarks extends React.PureComponent {
   renderItem(item) {
     if (item.has('name') && item.has('url')) {
       return (
-        <ul key={item}>
-          <a href={item.get('url')}>{item.get('name')}</a>
-        </ul>
+        <li key={item} className="bookmark">
+          <a href={item.get('url')}>
+            {item.get('name')}
+          </a>
+        </li>
       );
     } else {
       console.error('Bookmark has invalid format');
@@ -25,7 +27,7 @@ class Bookmarks extends React.PureComponent {
     }
 
     return (
-      <div>
+      <div className="widget">
         <h3>Bookmarks</h3>
         {body}
       </div>

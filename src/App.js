@@ -58,7 +58,7 @@ class App extends React.Component {
     const widgets = this.state.data.get('widgets')
       .map(this.renderWidget);
 
-    return (<div className="App">{widgets}</div>);
+    return (<div className="app">{widgets}</div>);
   }
 }
 

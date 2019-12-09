@@ -13,7 +13,9 @@ function Services(props) {
 
   return (
     <div>
-      <p>{caption} {props.trains.location}</p>
+      <p>
+        <strong>{caption} {props.trains.location}</strong>
+      </p>
       <table>
         {services}
       </table>
