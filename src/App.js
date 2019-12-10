@@ -17,7 +17,12 @@ class App extends React.Component {
     this.state = {
       data: loadSavedState(),
       unsavedChanges: false,
+      configMode: false,
     };
+  }
+
+  toggleConfigMode() {
+    this.setState({configMode: !this.state.configMode});
   }
 
   updateState(newState) {
@@ -28,7 +33,8 @@ class App extends React.Component {
   }
 
   shouldComponentUpdate(nextProps, nextState) {
-    return !(nextState.data.equals(this.state.data));
+    return !(nextState.data.equals(this.state.data))
+      || nextState.configMode != this.state.configMode;
   }
 
   renderWidget(config, index) {
@@ -90,7 +96,19 @@ class App extends React.Component {
     const widgets = this.state.data.get('widgets')
       .map((config, i) => this.renderWidget(config, i));
 
-    return (<div className="app">{widgets}</div>);
+    return (
+      <div>
+        <main className="app">{widgets}</main>
+        <footer>
+          <p>Created by <a href="https://alexbostock.co.uk">Alex Bostock</a>.</p>
+          <p>View source on <a href="https://github.com/alexbostock/home-dashboard">GitHub</a>.</p>
+          <p>Live train times from <a href="https://www.realtimetrains.co.uk/">Realtime Trains</a>.</p>
+          <button onClick={() => this.toggleConfigMode()}>
+            {this.state.configMode ? 'Exit config mode' : 'Configure widgets'}
+          </button>
+        </footer>
+      </div>
+    );
   }
 }
 

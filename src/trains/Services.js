@@ -55,7 +55,7 @@ function ontimenessMessage(scheduled, actual) {
     if (minsLate > 0) {
       msg = `${minsLate} minute${minsLate > 1 ? 's' : ''} late`;
     } else {
-      msg = `${-minsLate} minutes${-minsLate > 1 ? 's' : ''} early`
+      msg = `${-minsLate} minute${-minsLate > 1 ? 's' : ''} early`
     }
     return <span className="delayed">{msg}</span>;
   }

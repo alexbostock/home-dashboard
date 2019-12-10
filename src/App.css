@@ -2,6 +2,14 @@ body {
     font-family: Helvetica Neue, Helvetica, Arial, sans-serif;
 }
 
+footer {
+    display: flex;
+}
+
+footer > * {
+    margin: auto;
+}
+
 table {
     border-collapse: collapse;
     width: 100%;
@@ -23,7 +31,12 @@ img {
 
 a {
     color: inherit;
+    font-weight: bold;
     text-decoration: none;
+}
+
+a:hover {
+    color: rgb(85, 85, 85);
 }
 
 .app {
@@ -57,8 +70,6 @@ a {
 }
 
 .bookmark > a {
-    font-weight: bold;
-
     display: block;
     padding: 0.8em;
     border: 1px solid black;
@@ -86,8 +97,4 @@ a {
 
 .xkcd-link {
     display: block;
-}
-
-.xkcd-link:hover {
-    color: rgb(85, 85, 85);
 }
