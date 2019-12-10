@@ -7,7 +7,7 @@ class BookmarksConf extends React.PureComponent {
 
     this.state = {
       newName: '',
-      newUrl: '',
+      newUrl: 'https://',
     };
   }
 
@@ -38,18 +38,22 @@ class BookmarksConf extends React.PureComponent {
         <h3>Bookmarks</h3>
         <ul>
           {items}
-          <li key="newBookmark">
+          <li key="newBookmark" className="newBookmark">
             <input
               type="text"
+              className="bookmarkNameInput"
               value={this.state.newName}
               onChange={(event) => this.setState({newName: event.target.value})}
+              placeholder="Name"
             />
             <input
               type="text"
+              className="bookmarkURLInput"
               value={this.state.newUrl}
               onChange={(event) => this.setState({newUrl: event.target.value})}
+              placeholder="URL"
             />
-            <button onClick={() => this.addBookmark()}>Add</button>
+            <button className="addBookmarkButton" onClick={() => this.addBookmark()}>Add</button>
           </li>
         </ul>
       </div>
@@ -66,7 +70,7 @@ class BookmarksConf extends React.PureComponent {
 
     this.setState({
       newName: '',
-      newUrl: '',
+      newUrl: 'https://',
     });
   }
 

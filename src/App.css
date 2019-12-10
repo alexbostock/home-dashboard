@@ -65,22 +65,70 @@ a:hover {
     margin-top: 0;
 }
 
-.bookmark {
-    width: 100%;
-}
-
-.bookmark > a {
-    display: block;
-    padding: 0.8em;
+.bookmark, .newBookmark {
     border: 1px solid black;
     border-radius: 0.4em;
 
     margin-bottom: 1em;
-    text-align: center;
+    padding: 0.8em;
 }
 
-.bookmark > a:hover {
-    border-color: darkgrey;
+.bookmark {
+    display: flex;
+}
+
+.bookmark > a {
+    display: block;
+    text-align: center;
+    width: 100%;
+}
+
+.bookmark:hover {
+    color: rgb(85, 85, 85);
+    border-color: rgb(85, 85, 85);
+}
+
+.bookmark > button {
+    margin-left: auto;
+    padding: 0.2em;
+
+    font-weight: bold;
+}
+
+.newBookmark {
+    display: grid;
+    grid-template-columns: 9fr 1fr;
+    grid-template-rows: 1fr 1fr;
+}
+
+.newBookmark > input {
+    grid-column-start: 1;
+    grid-column-end: 9;
+
+    border-radius: 0.2em;
+}
+
+.bookmarkNameInput {
+    grid-row: 1;
+
+    margin-bottom: 0.2em;
+
+    font-size: 1em;
+    font-weight: bold;
+}
+
+.bookmarkURLInput {
+    grid-row: 2;
+
+    font-size: 0.8em;
+}
+
+.addBookmarkButton {
+    grid-column: 10;
+    grid-row-start: 1;
+    grid-row-end: 3;
+
+    margin-left: 0.4em;
 }
 
 .train-service {
