@@ -61,6 +61,11 @@ class App extends React.Component {
               key={`trains-config ${config.get('station')} ${config.get('arrivals')}`}
               station={config.get('station')}
               arrivals={config.get('arrivals')}
+              updateState={(update) => {
+                const newState = this.state.data
+                  .setIn(['widgets', index], update);
+                this.updateState(newState);
+              }}
             />
           );
         } else {
