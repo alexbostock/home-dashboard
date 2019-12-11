@@ -101,10 +101,10 @@ class App extends React.Component {
         <main className="app">{widgets}</main>
         <footer>
           <p>Created by <a href="https://alexbostock.co.uk">Alex Bostock</a>.</p>
-          <p>View source on <a href="https://github.com/alexbostock/home-dashboard">GitHub</a>.</p>
+          <p>View on <a href="https://github.com/alexbostock/home-dashboard">GitHub</a>.</p>
           <p>Live train times from <a href="https://www.realtimetrains.co.uk/">Realtime Trains</a>.</p>
           <button onClick={() => this.toggleConfigMode()}>
-            {this.state.configMode ? 'Exit config mode' : 'Configure widgets'}
+            {this.state.configMode ? 'Go back' : 'Settings'}
           </button>
         </footer>
       </div>

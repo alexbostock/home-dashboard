@@ -7,10 +7,20 @@ class TrainTimesConf extends React.PureComponent {
     super(props);
 
     this.state = {
-      station: this.props.station ? this.props.station : '',
+      station: this.props.station ? printStation(this.props.station) : '',
       arrivals: Boolean(props.arrivals),
       stations: {},
     };
+  }
+
+  valid(crs = this.state.station) {
+    crs = parsePrintedStation(crs);
+    return Boolean(this.state.stations[crs]);
+  }
+
+  unsavedChanges() {
+    return parsePrintedStation(this.state.station) !== this.props.station
+      || this.state.arrivals !== this.props.arrivals;
   }
 
   updateStation(event) {
@@ -18,17 +28,15 @@ class TrainTimesConf extends React.PureComponent {
   }
 
   updateArrivals(event) {
-    this.setState({arrivals: Boolean(event.target.value)});
+    this.setState({arrivals: Boolean(event.target.value)}, () => this.saveState());
   }
 
   saveState() {
-    let crs;
-    if (this.state.station.length === 3) {
-      crs = this.state.station;
-    } else {
-      crs = parsePrintedStation(this.state.station);
+    const crs = parsePrintedStation(this.state.station);
+
+    if (!this.unsavedChanges() || !this.valid(crs)) {
+      return;
     }
-    crs = crs.toUpperCase();
 
     this.props.updateState(Map({
       type: 'live-trains',
@@ -46,42 +54,50 @@ class TrainTimesConf extends React.PureComponent {
         <h3>Live Trains</h3>
 
         <div className="trainConfigForm">
-          <label htmlFor="stationInput">Station</label>
           <input
             id="stationInput"
             list="stationOptions"
             value={station}
             onChange={(e) => this.updateStation(e)}
+            placeholder="Station name (CRS)"
           />
           <datalist id="stationOptions">
             {this.stationOptions()}
           </datalist>
 
-          <label htmlFor="departuresButton">
-            Departures
-          </label>
-          <input
-            type="radio"
-            name="arrivals"
-            id="departuresButton"
-            value=""
-            checked={!this.state.arrivals}
-            onChange={(e) => this.updateArrivals(e)}
-          />
+          <p>
+            {this.valid() ? 'Valid station' : 'Invalid station'}
+          </p>
 
-          <label htmlFor="arrivalsButton">
-            Arrivals
-          </label>
-          <input
-            type="radio"
-            name="arrivals"
-            id="arrivalsButton"
-            value="truthy"
-            checked={this.state.arrivals}
-            onChange={(e) => this.updateArrivals(e)}
-          />
+          <div className="radioButtons">
+            <label htmlFor="departuresButton">
+              Departures
+            </label>
+            <input
+              type="radio"
+              name="arrivals"
+              id="departuresButton"
+              value=""
+              checked={!this.state.arrivals}
+              onChange={(e) => this.updateArrivals(e)}
+            />
 
-          <button onClick={() => this.saveState()}>Save</button>
+            <label htmlFor="arrivalsButton">
+              Arrivals
+            </label>
+            <input
+              type="radio"
+              name="arrivals"
+              id="arrivalsButton"
+              value="truthy"
+              checked={this.state.arrivals}
+              onChange={(e) => this.updateArrivals(e)}
+            />
+          </div>
+
+          <p>
+            {this.unsavedChanges() && this.valid() ? 'Unsaved changes' : 'All changes saved'}
+          </p>
         </div>
       </div>
     );
@@ -115,6 +131,25 @@ class TrainTimesConf extends React.PureComponent {
       .catch((err) => {
         console.error(err);
       });
+    
+    const timer = setInterval(() => {
+      // Save only if the value is stable for a short time
+      const station = this.state.station;
+
+      setTimeout(() => {
+        if (station === this.state.station) {
+          this.saveState();
+        }
+      }, 500);
+    }, 500);
+
+    this.setState({timer: timer});
+  }
+
+  componentWillUnmount() {
+    if (this.state.timer) {
+      clearInterval(this.state.timer);
+    }
   }
 }
 
@@ -123,7 +158,19 @@ function printStation(crs, name) {
 }
 
 function parsePrintedStation(str) {
-  return str.slice(str.length - 4, str.length - 1);
+  if (!str) {
+    return null;
+  }
+
+  if (str.length === 3) {
+    return str.toUpperCase();
+  }
+  
+  if (str[str.length - 1] === ')' && str[str.length - 5] === '(') {
+    return str.slice(str.length - 4, str.length - 1).toUpperCase();
+  }
+
+  return null;
 }
 
 export default TrainTimesConf;

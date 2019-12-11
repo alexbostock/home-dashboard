@@ -16,7 +16,7 @@ footer {
     padding: 0.4em;
 
     background-color: white;
-    border: 1px solid black;
+    border-top: 1px solid black;
 }
 
 footer > * {
@@ -195,34 +195,32 @@ button:hover {
     text-align: right;
 }
 
-.trainConfigForm {
-    display: grid;
-    grid-template-columns: 1fr 1fr 3fr 1fr;
-}
-
-.trainConfigForm > label {
-    grid-column: 1;
-    margin-right: 0.4em;
-    text-align: right;
+.trainConfigForm > input {
+    box-sizing: border-box;
+    width: 100%;
 }
 
 #stationInput {
-    grid-column-start: 2;
-    grid-column-end: 5;
-
     font-size: 0.8em;
 }
 
-#departuresButton, #arrivalsButton {
+.radioButtons {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+
+    width: max-content;
+}
+
+.radioButtons > label {
+    grid-column: 1;
+    text-align: right;
+}
+
+.radioButtons > input {
     grid-column: 2;
     margin-bottom: 0.2em;
     margin-left: 0;
     width: 2em;
-}
-
-.trainConfigForm > button {
-    grid-column: 4;
-    grid-row: 4;
 }
 
 .xkcd-link {
