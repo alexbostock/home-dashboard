@@ -62,11 +62,23 @@ a:hover {
 }
 
 input, button {
+    border: 1px solid black;
     border-radius: 0.4em;
+
+    padding: 0.4em;
 }
 
 button {
     font-size: 0.8em;
+    font-weight: bold;
+
+    background-color: white;
+}
+
+button:hover {
+    color: rgb(85, 85, 85);
+    border-color: rgb(85, 85, 85);
+    cursor: pointer;
 }
 
 .app {
