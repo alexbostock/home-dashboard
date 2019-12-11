@@ -116,11 +116,7 @@ button:hover {
 }
 
 .bookmark, .newBookmark {
-    border: 1px solid black;
-    border-radius: 0.4em;
-
     margin-bottom: 1em;
-    padding: 0.8em;
 }
 
 .bookmark:last-child, .newBookmark {
@@ -135,16 +131,21 @@ button:hover {
     display: block;
     text-align: center;
     width: 100%;
+
+    padding: 0.8em;
+
+    border: 1px solid black;
+    border-radius: 0.4em;
 }
 
-.bookmark:hover {
+.bookmark > a:hover {
     color: rgb(85, 85, 85);
     border-color: rgb(85, 85, 85);
 }
 
 .bookmark > button {
-    margin-left: auto;
-    padding: 0.2em;
+    margin-left: 0.8em; 
+    padding: 0.8em;
 
     font-weight: bold;
 }
@@ -153,6 +154,11 @@ button:hover {
     display: grid;
     grid-template-columns: 9fr 1fr;
     grid-template-rows: 1fr 1fr;
+
+    padding: 0.8em;
+
+    border: 1px solid black;
+    border-radius: 0.4em;
 }
 
 .newBookmark > input {
