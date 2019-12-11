@@ -1,9 +1,23 @@
 body {
     font-family: Helvetica Neue, Helvetica, Arial, sans-serif;
+
+    padding-bottom: 4em;
 }
 
 footer {
     display: flex;
+
+    position: fixed;
+    left: 0;
+    right: 0;
+    bottom: 0;
+
+    height: 2em;
+    padding-top: 1em;
+    padding-bottom: 1em;
+
+    background-color: white;
+    border: 1px solid black;
 }
 
 footer > * {
