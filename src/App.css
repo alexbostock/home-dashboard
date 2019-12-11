@@ -1,7 +1,7 @@
 body {
     font-family: Helvetica Neue, Helvetica, Arial, sans-serif;
 
-    padding-bottom: 4em;
+    padding-bottom: 4.8em;
 }
 
 footer {
@@ -12,9 +12,8 @@ footer {
     right: 0;
     bottom: 0;
 
-    height: 2em;
-    padding-top: 1em;
-    padding-bottom: 1em;
+    height: 4em;
+    padding: 0.4em;
 
     background-color: white;
     border: 1px solid black;
@@ -22,6 +21,11 @@ footer {
 
 footer > * {
     margin: auto;
+
+    padding-left: 0.2em;
+    padding-right: 0.2em;
+
+    text-align: center;
 }
 
 table {
@@ -61,6 +65,10 @@ input, button {
     border-radius: 0.4em;
 }
 
+button {
+    font-size: 0.8em;
+}
+
 .app {
     display: grid;
 }
@@ -68,6 +76,14 @@ input, button {
 @media (min-width: 800px) {
     .app {
         grid-template-columns: repeat(2, 1fr);
+    }
+
+    footer {
+        height: 2em;
+    }
+
+    body {
+        margin-bottom: 4em;
     }
 }
 
