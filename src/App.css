@@ -1,7 +1,5 @@
 body {
     font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
-
-    padding-bottom: 4.8em;
 }
 
 footer {
@@ -89,10 +87,6 @@ button:hover {
 
     footer {
         height: 2em;
-    }
-
-    body {
-        padding-bottom: 2.8em;
     }
 }
 
@@ -199,6 +193,10 @@ button:hover {
     grid-column-start: 1;
     grid-column-end: 3;
     font-size: 0.8em;
+}
+
+.invalidInput {
+    border-color: red;
 }
 
 .trainConfigForm > p {

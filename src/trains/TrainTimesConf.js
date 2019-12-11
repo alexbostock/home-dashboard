@@ -39,14 +39,17 @@ class TrainTimesConf extends React.PureComponent {
 
   saveState() {
     const crs = parsePrintedStation(this.state.station);
+    // If the station input is invalid, don't save it,
+    // but don't let that block saving other properties.
+    const station = this.valid(crs) ? crs : this.props.station;
 
-    if (!this.unsavedChanges() || !this.valid(crs)) {
+    if (!this.unsavedChanges()) {
       return;
     }
 
     this.props.updateState(Map({
       type: 'live-trains',
-      station: crs,
+      station: station,
       arrivals: this.state.arrivals,
       numServices: this.state.numServices,
     }));
@@ -63,6 +66,7 @@ class TrainTimesConf extends React.PureComponent {
         <div className="trainConfigForm">
           <input
             id="stationInput"
+            className={this.valid() ? '' : 'invalidInput'}
             list="stationOptions"
             value={station}
             onChange={(e) => this.updateStation(e)}
@@ -71,10 +75,6 @@ class TrainTimesConf extends React.PureComponent {
           <datalist id="stationOptions">
             {this.stationOptions()}
           </datalist>
-
-          <p>
-            {this.valid() ? 'Valid station' : 'Invalid station'}
-          </p>
 
           <label htmlFor="departuresButton">
             Departures
@@ -108,14 +108,15 @@ class TrainTimesConf extends React.PureComponent {
             id="numServicesInput"
             step="1"
             min="1"
+            max="99"
             value={this.state.numServices}
             onChange={(e) => this.updateNumServices(e)}
           />
-
-          <p>
-            {this.unsavedChanges() && this.valid() ? 'Unsaved changes' : 'All changes saved'}
-          </p>
         </div>
+
+        <p>
+          {this.unsavedChanges() && this.valid() ? 'Unsaved changes' : 'All changes saved'}
+        </p>
       </div>
     );
   }
@@ -157,7 +158,7 @@ class TrainTimesConf extends React.PureComponent {
         if (station === this.state.station) {
           this.saveState();
         }
-      }, 500);
+      }, 1000);
     }, 500);
 
     this.setState({timer: timer});
