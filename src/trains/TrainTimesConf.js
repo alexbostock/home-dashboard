@@ -123,7 +123,7 @@ function printStation(crs, name) {
 }
 
 function parsePrintedStation(str) {
-  return str.split('(')[1].split(')')[0];
+  return str.slice(str.length - 4, str.length - 1);
 }
 
 export default TrainTimesConf;
