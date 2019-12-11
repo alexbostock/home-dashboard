@@ -76,43 +76,41 @@ class TrainTimesConf extends React.PureComponent {
             {this.valid() ? 'Valid station' : 'Invalid station'}
           </p>
 
-          <div className="radioButtons">
-            <label htmlFor="departuresButton">
-              Departures
-            </label>
-            <input
-              type="radio"
-              name="arrivals"
-              id="departuresButton"
-              value=""
-              checked={!this.state.arrivals}
-              onChange={(e) => this.updateArrivals(e)}
-            />
+          <label htmlFor="departuresButton">
+            Departures
+          </label>
+          <input
+            type="radio"
+            name="arrivals"
+            id="departuresButton"
+            value=""
+            checked={!this.state.arrivals}
+            onChange={(e) => this.updateArrivals(e)}
+          />
 
-            <label htmlFor="arrivalsButton">
-              Arrivals
-            </label>
-            <input
-              type="radio"
-              name="arrivals"
-              id="arrivalsButton"
-              value="truthy"
-              checked={this.state.arrivals}
-              onChange={(e) => this.updateArrivals(e)}
-            />
+          <label htmlFor="arrivalsButton">
+            Arrivals
+          </label>
+          <input
+            type="radio"
+            name="arrivals"
+            id="arrivalsButton"
+            value="truthy"
+            checked={this.state.arrivals}
+            onChange={(e) => this.updateArrivals(e)}
+          />
 
-            <label htmlFor="numServicesInput">
-              Number of services displayed
-            </label>
-            <input
-              type="number"
-              id="numServicesInput"
-              step="1"
-              min="1"
-              value={this.state.numServices}
-              onChange={(e) => this.updateNumServices(e)}
-            />
-          </div>
+          <label htmlFor="numServicesInput">
+            Number of services displayed
+          </label>
+          <input
+            type="number"
+            id="numServicesInput"
+            step="1"
+            min="1"
+            value={this.state.numServices}
+            onChange={(e) => this.updateNumServices(e)}
+          />
 
           <p>
             {this.unsavedChanges() && this.valid() ? 'Unsaved changes' : 'All changes saved'}

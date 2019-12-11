@@ -20,7 +20,7 @@ class BookmarksConf extends React.PureComponent {
           </a>
 
           <button onClick={() => this.removeBookmark(index)}>
-            X
+            Delete
           </button>
         </li>
       );
@@ -33,27 +33,37 @@ class BookmarksConf extends React.PureComponent {
 
   render() {
     const items = this.props.items.map((item, i) => this.renderItem(item, i));
+
+    const submitFunc = (event) => {
+      event.preventDefault();
+      this.addBookmark();
+    }
+
     return (
       <div className="widget">
         <h3>Bookmarks</h3>
         <ul>
           {items}
-          <li key="newBookmark" className="newBookmark">
-            <input
-              type="text"
-              className="bookmarkNameInput"
-              value={this.state.newName}
-              onChange={(event) => this.setState({newName: event.target.value})}
-              placeholder="Name"
-            />
-            <input
-              type="text"
-              className="bookmarkURLInput"
-              value={this.state.newUrl}
-              onChange={(event) => this.setState({newUrl: event.target.value})}
-              placeholder="URL"
-            />
-            <button className="addBookmarkButton" onClick={() => this.addBookmark()}>Add</button>
+          <li key="newBookmark">
+            <form className="newBookmark" onSubmit={submitFunc}>
+              <div>
+                <input
+                  type="text"
+                  className="bookmarkNameInput"
+                  value={this.state.newName}
+                  onChange={(event) => this.setState({newName: event.target.value})}
+                  placeholder="Name"
+                />
+                <input
+                  type="text"
+                  className="bookmarkURLInput"
+                  value={this.state.newUrl}
+                  onChange={(event) => this.setState({newUrl: event.target.value})}
+                  placeholder="URL"
+                />
+              </div>
+              <button className="addBookmarkButton">Add</button>
+            </form>
           </li>
         </ul>
       </div>

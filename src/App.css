@@ -1,5 +1,5 @@
 body {
-    font-family: Helvetica Neue, Helvetica, Arial, sans-serif;
+    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
 
     padding-bottom: 4.8em;
 }
@@ -7,10 +7,7 @@ body {
 footer {
     display: flex;
 
-    position: fixed;
-    left: 0;
-    right: 0;
-    bottom: 0;
+    grid-column: 1/-1;
 
     height: 4em;
     padding: 0.4em;
@@ -22,8 +19,8 @@ footer {
 footer > * {
     margin: auto;
 
-    padding-left: 0.2em;
-    padding-right: 0.2em;
+    padding-left: 0.5em;
+    padding-right: 0.5em;
 
     text-align: center;
 }
@@ -95,7 +92,7 @@ button:hover {
     }
 
     body {
-        margin-bottom: 4em;
+        padding-bottom: 2.8em;
     }
 }
 
@@ -115,16 +112,13 @@ button:hover {
     margin-top: 0;
 }
 
-.bookmark, .newBookmark {
+.bookmark {
+    display: flex;
     margin-bottom: 1em;
 }
 
 .bookmark:last-child, .newBookmark {
     margin-bottom: 0;
-}
-
-.bookmark {
-    display: flex;
 }
 
 .bookmark > a {
@@ -143,32 +137,21 @@ button:hover {
     border-color: rgb(85, 85, 85);
 }
 
-.bookmark > button {
-    margin-left: 0.8em; 
+.bookmark > button, .addBookmarkButton {
+    margin-left: 0.4em; 
     padding: 0.8em;
-
-    font-weight: bold;
 }
 
 .newBookmark {
-    display: grid;
-    grid-template-columns: 9fr 1fr;
-    grid-template-rows: 1fr 1fr;
-
-    padding: 0.8em;
-
-    border: 1px solid black;
-    border-radius: 0.4em;
+    display: flex;
 }
 
-.newBookmark > input {
-    grid-column-start: 1;
-    grid-column-end: 9;
+.bookmarkNameInput, .bookmarkURLInput {
+    box-sizing: border-box;
+    width: 100%;
 }
 
 .bookmarkNameInput {
-    grid-row: 1;
-
     margin-bottom: 0.2em;
 
     font-size: 1em;
@@ -176,17 +159,7 @@ button:hover {
 }
 
 .bookmarkURLInput {
-    grid-row: 2;
-
     font-size: 0.8em;
-}
-
-.addBookmarkButton {
-    grid-column: 10;
-    grid-row-start: 1;
-    grid-row-end: 3;
-
-    margin-left: 0.4em;
 }
 
 .train-service {
@@ -201,33 +174,36 @@ button:hover {
     text-align: right;
 }
 
-.trainConfigForm > input {
-    box-sizing: border-box;
-    width: 100%;
-}
-
-#stationInput {
-    font-size: 0.8em;
-}
-
-.radioButtons {
+.trainConfigForm {
     display: grid;
     grid-template-columns: 1fr 1fr;
-
-    width: max-content;
 }
 
-.radioButtons > label {
+.trainConfigForm > label {
     grid-column: 1;
     text-align: right;
     margin-right: 1em;
 }
 
-.radioButtons > input {
+.trainConfigForm > input {
     grid-column: 2;
     margin-bottom: 1em;
     margin-left: 0;
-    width: 3em;
+    width: 2.4em;
+}
+
+#stationInput {
+    box-sizing: border-box;
+    width: 100%;
+
+    grid-column-start: 1;
+    grid-column-end: 3;
+    font-size: 0.8em;
+}
+
+.trainConfigForm > p {
+    grid-column: 1/3;
+    text-align: center;
 }
 
 .xkcd-link {
