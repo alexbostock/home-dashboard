@@ -5,10 +5,13 @@ function Services(props) {
     return <p>No data.</p>;
   }
 
-  const services = props.trains.services.slice(0, 3)
+  const numServicesToRender = props.numServices || 3;
+
+  const services = props.trains.services
     .sort((a, b) => a.realTime - b.realTime)
+    .slice(0, numServicesToRender)
     .map(renderService);
-  
+
   const caption = props.arrivals ? 'Arrivals at' : 'Departures from';
 
   return (
