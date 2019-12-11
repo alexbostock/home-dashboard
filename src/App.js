@@ -67,6 +67,7 @@ class App extends React.Component {
               key={`trains-config ${config.get('station')} ${config.get('arrivals')}`}
               station={config.get('station')}
               arrivals={config.get('arrivals')}
+              numServices={config.get('numServices')}
               updateState={(update) => {
                 const newState = this.state.data
                   .setIn(['widgets', index], update);
@@ -80,6 +81,7 @@ class App extends React.Component {
               key={`trains ${config.get('station')} ${config.get('arrivals')}`}
               station={config.get('station')}
               arrivals={config.get('arrivals')}
+              numServices={config.get('numServices')}
             />
           );
         }
@@ -125,6 +127,7 @@ function defaultState() {
         type: 'live-trains',
         station: 'STP',
         arrivals: false,
+        numServices: 3,
       }),
       Map({
         type: 'xkcd',

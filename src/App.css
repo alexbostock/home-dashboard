@@ -214,13 +214,14 @@ button:hover {
 .radioButtons > label {
     grid-column: 1;
     text-align: right;
+    margin-right: 1em;
 }
 
 .radioButtons > input {
     grid-column: 2;
-    margin-bottom: 0.2em;
+    margin-bottom: 1em;
     margin-left: 0;
-    width: 2em;
+    width: 3em;
 }
 
 .xkcd-link {

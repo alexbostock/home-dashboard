@@ -20,6 +20,7 @@ class TrainTimes extends React.PureComponent {
       body = <Services
         trains={this.state.trains}
         arrivals={this.props.arrivals}
+        numServices={this.props.numServices}
       />;
     } else {
       body = <p>No station specified.</p>;

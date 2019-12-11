@@ -9,6 +9,7 @@ class TrainTimesConf extends React.PureComponent {
     this.state = {
       station: this.props.station ? printStation(this.props.station) : '',
       arrivals: Boolean(props.arrivals),
+      numServices: this.props.numServices ? this.props.numServices : 3,
       stations: {},
     };
   }
@@ -20,7 +21,8 @@ class TrainTimesConf extends React.PureComponent {
 
   unsavedChanges() {
     return parsePrintedStation(this.state.station) !== this.props.station
-      || this.state.arrivals !== this.props.arrivals;
+      || this.state.arrivals !== this.props.arrivals
+      || this.state.numServices !== this.props.numServices;
   }
 
   updateStation(event) {
@@ -29,6 +31,10 @@ class TrainTimesConf extends React.PureComponent {
 
   updateArrivals(event) {
     this.setState({arrivals: Boolean(event.target.value)}, () => this.saveState());
+  }
+
+  updateNumServices(event) {
+    this.setState({numServices: event.target.value}, () => this.saveState());
   }
 
   saveState() {
@@ -42,6 +48,7 @@ class TrainTimesConf extends React.PureComponent {
       type: 'live-trains',
       station: crs,
       arrivals: this.state.arrivals,
+      numServices: this.state.numServices,
     }));
   }
 
@@ -92,6 +99,18 @@ class TrainTimesConf extends React.PureComponent {
               value="truthy"
               checked={this.state.arrivals}
               onChange={(e) => this.updateArrivals(e)}
+            />
+
+            <label htmlFor="numServicesInput">
+              Number of services displayed
+            </label>
+            <input
+              type="number"
+              id="numServicesInput"
+              step="1"
+              min="1"
+              value={this.state.numServices}
+              onChange={(e) => this.updateNumServices(e)}
             />
           </div>
 
