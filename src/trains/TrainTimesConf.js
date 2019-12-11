@@ -45,8 +45,8 @@ class TrainTimesConf extends React.PureComponent {
       <div className="widget">
         <h3>Live Trains</h3>
 
-        <div>
-          <label htmlFor="stationInput">Station: </label>
+        <div className="trainConfigForm">
+          <label htmlFor="stationInput">Station</label>
           <input
             id="stationInput"
             list="stationOptions"
@@ -57,31 +57,29 @@ class TrainTimesConf extends React.PureComponent {
             {this.stationOptions()}
           </datalist>
 
-          <div>
-            <input
-              type="radio"
-              name="arrivals"
-              id="departuresButton"
-              value=""
-              checked={!this.state.arrivals}
-              onChange={(e) => this.updateArrivals(e)}
-            />
-            <label htmlFor="departuresButton">
-              Departures
-            </label>
+          <label htmlFor="departuresButton">
+            Departures
+          </label>
+          <input
+            type="radio"
+            name="arrivals"
+            id="departuresButton"
+            value=""
+            checked={!this.state.arrivals}
+            onChange={(e) => this.updateArrivals(e)}
+          />
 
-            <input
-              type="radio"
-              name="arrivals"
-              id="arrivalsButton"
-              value="truthy"
-              checked={this.state.arrivals}
-              onChange={(e) => this.updateArrivals(e)}
-            />
-            <label htmlFor="arrivalsButton">
-              Arrivals
-            </label>
-          </div>
+          <label htmlFor="arrivalsButton">
+            Arrivals
+          </label>
+          <input
+            type="radio"
+            name="arrivals"
+            id="arrivalsButton"
+            value="truthy"
+            checked={this.state.arrivals}
+            onChange={(e) => this.updateArrivals(e)}
+          />
 
           <button onClick={() => this.saveState()}>Save</button>
         </div>
@@ -96,7 +94,7 @@ class TrainTimesConf extends React.PureComponent {
 
     return Object.keys(this.state.stations).map((crs) => {
       const val = printStation(crs, this.state.stations[crs]);
-      return <option value={val} key={crs} />;
+      return <option value={val} key={crs + this.state.stations[crs]} />;
     });
   }
 

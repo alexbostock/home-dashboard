@@ -34,7 +34,7 @@ class App extends React.Component {
 
   shouldComponentUpdate(nextProps, nextState) {
     return !(nextState.data.equals(this.state.data))
-      || nextState.configMode != this.state.configMode;
+      || nextState.configMode !== this.state.configMode;
   }
 
   renderWidget(config, index) {

@@ -25,6 +25,10 @@ ul {
     padding: 0;
 }
 
+ul:last-child {
+    margin-bottom: 0;
+}
+
 img {
     max-width: 100%;
 }
@@ -37,6 +41,10 @@ a {
 
 a:hover {
     color: rgb(85, 85, 85);
+}
+
+input, button {
+    border-radius: 0.4em;
 }
 
 .app {
@@ -73,6 +81,10 @@ a:hover {
     padding: 0.8em;
 }
 
+.bookmark:last-child, .newBookmark {
+    margin-bottom: 0;
+}
+
 .bookmark {
     display: flex;
 }
@@ -104,8 +116,6 @@ a:hover {
 .newBookmark > input {
     grid-column-start: 1;
     grid-column-end: 9;
-
-    border-radius: 0.2em;
 }
 
 .bookmarkNameInput {
@@ -141,6 +151,36 @@ a:hover {
 
 .train-service > tr > *:nth-child(2) {
     text-align: right;
+}
+
+.trainConfigForm {
+    display: grid;
+    grid-template-columns: 1fr 1fr 3fr 1fr;
+}
+
+.trainConfigForm > label {
+    grid-column: 1;
+    margin-right: 0.4em;
+    text-align: right;
+}
+
+#stationInput {
+    grid-column-start: 2;
+    grid-column-end: 5;
+
+    font-size: 0.8em;
+}
+
+#departuresButton, #arrivalsButton {
+    grid-column: 2;
+    margin-bottom: 0.2em;
+    margin-left: 0;
+    width: 2em;
+}
+
+.trainConfigForm > button {
+    grid-column: 4;
+    grid-row: 4;
 }
 
 .xkcd-link {

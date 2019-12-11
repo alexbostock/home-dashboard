@@ -63,7 +63,7 @@ function ontimenessMessage(scheduled, actual) {
 
 function leftpad(num) {
   num = num.toString();
-  return num.length === 4 ? num : '0' + num;
+  return new Array(4 - num.length).fill('0').join('') + num;
 }
 
 export default Services;
