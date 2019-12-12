@@ -200,3 +200,19 @@ button:hover {
 .xkcd-link {
     display: block;
 }
+
+.clock {
+    display: grid;
+    height: 100%;
+}
+
+.clock > span {
+    font-size: 3.8em;
+    font-weight: bold;
+    margin: auto;
+
+    background-color: lightgrey;
+    border: 1px solid black;
+    border-radius: 0.5em;
+    padding: 5% 5% 7% 5%;
+}

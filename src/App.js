@@ -4,10 +4,11 @@ import { List, Map } from 'immutable';
 import { serialize, deserialize } from 'json-immutable';
 
 import './App.css';
-import TrainTimes from './trains/TrainTimes';
-import TrainTimesConf from './trains/TrainTimesConf';
 import Bookmarks from './bookmarks/Bookmarks';
 import BookmarksConf from './bookmarks/BookmarksConf';
+import Clock from './clock/Clock';
+import TrainTimes from './trains/TrainTimes';
+import TrainTimesConf from './trains/TrainTimesConf';
 import Xkcd from './xkcd/Xkcd';
 
 class App extends React.Component {
@@ -60,6 +61,8 @@ class App extends React.Component {
             />
           );
         }
+      case 'clock':
+        return <Clock key={'clock' + index} />;
       case 'live-trains':
         if (this.state.configMode) {
           return (
@@ -124,6 +127,9 @@ function defaultState() {
         items: List([
           Map({name: 'Google', url: 'https://google.com'}),
         ]),
+      }),
+      Map({
+        type: 'clock',
       }),
       Map({
         type: 'live-trains',
