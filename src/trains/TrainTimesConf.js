@@ -59,53 +59,55 @@ class TrainTimesConf extends React.PureComponent {
     const crs = this.state.station;
     const station = printStation(crs, this.state.stations[crs]);
 
+    // Get widget index to avoid rendering duplicate IDs.
+    const widgetIndex = this.props.widgetIndex;
+
     return (
       <div className="widget">
         <h3>Live Trains</h3>
 
         <div className="trainConfigForm">
           <input
-            id="stationInput"
-            className={this.valid() ? '' : 'invalidInput'}
-            list="stationOptions"
+            className={this.valid() ? 'stationInput' : 'stationInput invalidInput'}
+            list={'stationOptions' + widgetIndex}
             value={station}
             onChange={(e) => this.updateStation(e)}
             placeholder="Station name (CRS)"
           />
-          <datalist id="stationOptions">
+          <datalist id={'stationOptions' + widgetIndex}>
             {this.stationOptions()}
           </datalist>
 
-          <label htmlFor="departuresButton">
+          <label htmlFor={'departuresButton' + widgetIndex}>
             Departures
           </label>
           <input
             type="radio"
             name="arrivals"
-            id="departuresButton"
+            id={'departuresButton' + widgetIndex}
             value=""
             checked={!this.state.arrivals}
             onChange={(e) => this.updateArrivals(e)}
           />
 
-          <label htmlFor="arrivalsButton">
+          <label htmlFor={'arrivalsButton' + widgetIndex}>
             Arrivals
           </label>
           <input
             type="radio"
             name="arrivals"
-            id="arrivalsButton"
+            id={'arrivalsButton' + widgetIndex}
             value="truthy"
             checked={this.state.arrivals}
             onChange={(e) => this.updateArrivals(e)}
           />
 
-          <label htmlFor="numServicesInput">
+          <label htmlFor={'numServicesInput' + widgetIndex}>
             Number of services displayed
           </label>
           <input
             type="number"
-            id="numServicesInput"
+            id={'numServicesInput' + widgetIndex}
             step="1"
             min="1"
             max="99"
@@ -113,10 +115,6 @@ class TrainTimesConf extends React.PureComponent {
             onChange={(e) => this.updateNumServices(e)}
           />
         </div>
-
-        <p>
-          {this.unsavedChanges() && this.valid() ? 'Unsaved changes' : 'All changes saved'}
-        </p>
       </div>
     );
   }

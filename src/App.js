@@ -73,6 +73,7 @@ class App extends React.Component {
                   .setIn(['widgets', index], update);
                 this.updateState(newState);
               }}
+              widgetIndex={index}
             />
           );
         } else {
