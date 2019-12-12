@@ -11,9 +11,8 @@ class Clock extends React.PureComponent {
 
   render() {
     return (
-      <div className="widget">
-        <div className="clock">
-          <span>{this.state.time}</span></div>
+      <div className="clock">
+        <span>{this.state.time}</span>
       </div>
     );
   }

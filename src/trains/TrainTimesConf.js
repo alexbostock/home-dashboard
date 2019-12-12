@@ -63,10 +63,10 @@ class TrainTimesConf extends React.PureComponent {
     const widgetIndex = this.props.widgetIndex;
 
     return (
-      <div className="widget">
+      <div>
         <h3>Live Trains</h3>
 
-        <div className="trainConfigForm">
+        <form className="trainConfigForm">
           <input
             className={this.valid() ? 'stationInput' : 'stationInput invalidInput'}
             list={'stationOptions' + widgetIndex}
@@ -114,7 +114,7 @@ class TrainTimesConf extends React.PureComponent {
             value={this.state.numServices}
             onChange={(e) => this.updateNumServices(e)}
           />
-        </div>
+        </form>
       </div>
     );
   }

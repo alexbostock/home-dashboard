@@ -27,7 +27,7 @@ class TrainTimes extends React.PureComponent {
     }
 
     return (
-      <div className="widget">
+      <div>
         <h3>Live Trains</h3>
         {body}
       </div>

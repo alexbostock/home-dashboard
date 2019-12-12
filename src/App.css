@@ -102,7 +102,7 @@ button:hover {
     padding: 1em;
 }
 
-.widget > h3 {
+h3 {
     margin-top: 0;
 }
 
@@ -215,4 +215,23 @@ button:hover {
     border: 1px solid black;
     border-radius: 0.5em;
     padding: 5% 5% 7% 5%;
+}
+
+.widgetMenuBar {
+    user-select: none;
+
+    display: flex;
+
+    color: rgb(85, 85, 85);
+    border-bottom: 1px solid rgb(85, 85, 85);
+    margin-bottom: 1em;
+    padding: 0.5em;
+}
+
+.widgetMenuBar > button {
+    margin-left: auto;
+}
+
+select {
+    margin-left: 1em;
 }

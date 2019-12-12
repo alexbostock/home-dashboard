@@ -10,6 +10,34 @@ import Clock from './clock/Clock';
 import TrainTimes from './trains/TrainTimes';
 import TrainTimesConf from './trains/TrainTimesConf';
 import Xkcd from './xkcd/Xkcd';
+import NewWidget from './NewWidget';
+
+const widgetsAvailable = {
+  'bookmarks': {
+    name: 'Bookmarks',
+    config: Map({
+      items: List([
+        Map({name: 'Google', 'url': 'https://google.com'}),
+      ]),
+    }),
+  },
+  'clock': {
+    name: 'Clock',
+    config: Map(),
+  },
+  'live-trains': {
+    name: 'Live train times',
+    config: Map({
+      station: 'STP',
+      arrivals: false,
+      numServices: 3,
+    }),
+  },
+  'xkcd': {
+    name: 'Latest xkcd comic',
+    config: Map(),
+  },
+};
 
 class App extends React.Component {
   constructor() {
@@ -38,13 +66,12 @@ class App extends React.Component {
       || nextState.configMode !== this.state.configMode;
   }
 
-  renderWidget(config, index) {
+  renderWidgetComponent(config, index) {
     switch (config.get('type')) {
       case 'bookmarks':
         if (this.state.configMode) {
           return (
             <BookmarksConf
-              key={'bookmarks-config' + config.get('items').join}
               items={config.get('items')}
               updateState={(update) => {
                 const newState = this.state.data
@@ -56,18 +83,16 @@ class App extends React.Component {
         } else {
           return (
             <Bookmarks
-              key={'bookmarks' + config.get('items').join}
               items={config.get('items')}
             />
           );
         }
       case 'clock':
-        return <Clock key={'clock' + index} />;
+        return <Clock />;
       case 'live-trains':
         if (this.state.configMode) {
           return (
             <TrainTimesConf
-              key={`trains-config ${config.get('station')} ${config.get('arrivals')}`}
               station={config.get('station')}
               arrivals={config.get('arrivals')}
               numServices={config.get('numServices')}
@@ -82,7 +107,6 @@ class App extends React.Component {
         } else {
           return (
             <TrainTimes
-              key={`trains ${config.get('station')} ${config.get('arrivals')}`}
               station={config.get('station')}
               arrivals={config.get('arrivals')}
               numServices={config.get('numServices')}
@@ -90,17 +114,51 @@ class App extends React.Component {
           );
         }
       case 'xkcd':
-        // xkcd widget has no config
-        return <Xkcd key={config} />;
+        return <Xkcd />;
       default:
         console.error(`Invalid widget type: ${config.get('type')}`);
         return null;
     }
   }
 
+  renderWidget(config, index) {
+    const widget = this.renderWidgetComponent(config, index);
+
+    if (this.state.configMode) {
+      return (
+        <div
+          className="widget"
+          key={config + index}
+          draggable="true"
+          onDragStart={e => this.onDragStart(e, index)}
+          onDragOver={e => e.preventDefault()}
+          onDrop={e => this.onDrop(e, index)}
+        >
+          <div className="widgetMenuBar">
+            Drag widget to reposition
+            <button onClick={() => this.deleteWidget(index)}>Delete</button>
+          </div>
+          {widget}
+        </div>
+      )
+    } else {
+      return <div className="widget" key={config + index}>{widget}</div>;
+    }
+  }
+
   render() {
+    const newWidgetForm = (
+      <NewWidget
+        key="newWidgetWidget"
+        render={this.state.configMode}
+        widgets={widgetsAvailable}
+        add={this.addWidget.bind(this)}
+      />
+    );
+
     const widgets = this.state.data.get('widgets')
-      .map((config, i) => this.renderWidget(config, i));
+      .map((config, i) => this.renderWidget(config, i))
+      .concat([newWidgetForm]);
 
     return (
       <div className="app">
@@ -117,30 +175,57 @@ class App extends React.Component {
       </div>
     );
   }
+
+  onDragStart(event, index) {
+    event.dataTransfer.setData('draggedIndex', index);
+  }
+
+  onDrop(event, index) {
+    event.preventDefault();
+
+    const draggedIndex = event.dataTransfer.getData('draggedIndex');
+    if (index === draggedIndex) {
+      return;
+    }
+
+    const widget1 = this.state.data.getIn(['widgets', draggedIndex]);
+    const widget2 = this.state.data.getIn(['widgets', index]);
+
+    const widgets = this.state.data.get('widgets')
+      .set(index, widget1)
+      .set(draggedIndex, widget2);
+
+    const data = this.state.data.set('widgets', widgets);
+
+    this.updateState(data);
+  }
+
+  addWidget(type) {
+    const widgets = this.state.data.get('widgets')
+      .concat([defaultWidgetState(type)]);
+    
+    const data = this.state.data.set('widgets', widgets);
+
+    console.log(data.toJS());
+    console.log(this.state.data.toJS());
+    
+    this.updateState(data);
+  }
+
+  deleteWidget(index) {
+    const data = this.state.data.deleteIn(['widgets', index]);
+
+    this.updateState(data);
+  }
+}
+
+function defaultWidgetState(key) {
+  return widgetsAvailable[key].config.set('type', key);
 }
 
 function defaultState() {
   return Map({
-    widgets: List([
-      Map({
-        type: 'bookmarks',
-        items: List([
-          Map({name: 'Google', url: 'https://google.com'}),
-        ]),
-      }),
-      Map({
-        type: 'clock',
-      }),
-      Map({
-        type: 'live-trains',
-        station: 'STP',
-        arrivals: false,
-        numServices: 3,
-      }),
-      Map({
-        type: 'xkcd',
-      }),
-    ]),
+    widgets: List(Object.keys(widgetsAvailable)).map(defaultWidgetState),
   });
 }
 

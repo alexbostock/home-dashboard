@@ -27,7 +27,7 @@ class Bookmarks extends React.PureComponent {
     }
 
     return (
-      <div className="widget">
+      <div>
         <h3>Bookmarks</h3>
         {body}
       </div>
