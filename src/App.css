@@ -208,6 +208,11 @@ form > input {
     width: 2.4em;
 }
 
+form > select {
+    grid-column: 2;
+    margin: 0.5em 0;
+}
+
 .stationInput {
     box-sizing: border-box;
     width: 100% !important;
