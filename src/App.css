@@ -56,6 +56,11 @@ a:hover {
     color: rgb(85, 85, 85);
 }
 
+a.disabled {
+    pointer-events: none;
+    cursor: default;
+}
+
 input, button {
     border: 1px solid black;
     border-radius: 0.4em;

@@ -177,16 +177,21 @@ class App extends React.Component {
   }
 
   onDragStart(event, index) {
+    if (event.dataTransfer.getData('bookmark')) {
+      return;
+    }
+
     event.dataTransfer.setData('draggedIndex', index);
   }
 
   onDrop(event, index) {
     event.preventDefault();
 
-    const draggedIndex = event.dataTransfer.getData('draggedIndex');
-    if (index === draggedIndex) {
+    if (event.dataTransfer.getData('bookmark')) {
       return;
     }
+
+    const draggedIndex = event.dataTransfer.getData('draggedIndex');
 
     const widget1 = this.state.data.getIn(['widgets', draggedIndex]);
     const widget2 = this.state.data.getIn(['widgets', index]);
@@ -205,9 +210,6 @@ class App extends React.Component {
       .concat([defaultWidgetState(type)]);
     
     const data = this.state.data.set('widgets', widgets);
-
-    console.log(data.toJS());
-    console.log(this.state.data.toJS());
     
     this.updateState(data);
   }
