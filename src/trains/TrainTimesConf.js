@@ -20,13 +20,30 @@ class TrainTimesConf extends React.PureComponent {
   }
 
   unsavedChanges() {
-    return parsePrintedStation(this.state.station) !== this.props.station
+    const station = parsePrintedStation(this.state.station);
+    const propStation = parsePrintedStation(this.props.station);
+
+    return (station !== propStation && this.valid())
       || this.state.arrivals !== this.props.arrivals
       || this.state.numServices !== this.props.numServices;
   }
 
   updateStation(event) {
-    this.setState({station: event.target.value});
+    let value = event.target.value;
+    if (this.valid(value)) {
+      value = printStation(value, this.state.stations[value]);
+    }
+
+    this.setState({station: value}, () => {
+      // Save only if the value is stable for a short time
+      const station = this.state.station;
+
+      setTimeout(() => {
+        if (station === this.state.station) {
+          this.saveState();
+        }
+      }, 500);
+    });
   }
 
   updateArrivals(event) {
@@ -38,18 +55,17 @@ class TrainTimesConf extends React.PureComponent {
   }
 
   saveState() {
-    const crs = parsePrintedStation(this.state.station);
-    // If the station input is invalid, don't save it,
-    // but don't let that block saving other properties.
-    const station = this.valid(crs) ? crs : this.props.station;
-
     if (!this.unsavedChanges()) {
       return;
     }
 
+    // If the station input is invalid, don't save it,
+    // but don't let that block saving other properties.
+    const crs = parsePrintedStation(this.valid() ? this.state.station : this.props.station);
+
     this.props.updateState(Map({
       type: 'live-trains',
-      station: station,
+      station: crs,
       arrivals: this.state.arrivals,
       numServices: this.state.numServices,
     }));
@@ -147,30 +163,11 @@ class TrainTimesConf extends React.PureComponent {
       .catch((err) => {
         console.error(err);
       });
-    
-    const timer = setInterval(() => {
-      // Save only if the value is stable for a short time
-      const station = this.state.station;
-
-      setTimeout(() => {
-        if (station === this.state.station) {
-          this.saveState();
-        }
-      }, 1000);
-    }, 500);
-
-    this.setState({timer: timer});
-  }
-
-  componentWillUnmount() {
-    if (this.state.timer) {
-      clearInterval(this.state.timer);
     }
   }
-}
 
 function printStation(crs, name) {
-  return name ? `${name} (${crs})` : crs;
+  return name ? `${name} (${crs.toUpperCase()})` : crs;
 }
 
 function parsePrintedStation(str) {
