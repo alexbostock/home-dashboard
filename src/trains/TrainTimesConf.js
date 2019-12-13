@@ -11,6 +11,7 @@ class TrainTimesConf extends React.PureComponent {
       arrivals: Boolean(props.arrivals),
       numServices: this.props.numServices ? this.props.numServices : 3,
       stations: {},
+      axiosCancelToken: axios.CancelToken.source(),
     };
   }
 
@@ -154,17 +155,23 @@ class TrainTimesConf extends React.PureComponent {
       url = 'http://localhost:4000/trains/stations';
     }
 
-    axios.get(url)
+    axios.get(url, { cancelToken: this.state.axiosCancelToken })
       .then((res) => {
         const stations = {};
         res.data.forEach((s) => stations[s.crs] = s.name);
         this.setState({stations: stations});
       })
-      .catch((err) => {
-        console.error(err);
+      .catch(err => {
+        if (err.message !== 'Cancelled on unmount') {
+          console.error(err);
+        }
       });
-    }
   }
+
+  componentWillUnmount() {
+    this.state.axiosCancelToken.cancel();
+  }
+}
 
 function printStation(crs, name) {
   return name ? `${name} (${crs.toUpperCase()})` : crs;

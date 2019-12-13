@@ -1,13 +1,14 @@
 import React from 'react';
 import axios from 'axios';
-import { setIntervalAsync } from 'set-interval-async/dynamic';
-import { clearIntervalAsync } from 'set-interval-async';
 
 class Xkcd extends React.PureComponent {
   constructor() {
     super();
 
-    this.state = {comic: null};
+    this.state = {
+      comic: null,
+      axiosCancelToken: axios.CancelToken.source(),
+    };
   }
 
   render() {
@@ -35,7 +36,7 @@ class Xkcd extends React.PureComponent {
     );
   }
 
-  async refresh() {
+  refresh() {
     let url;
     if (process.env.NODE_ENV === 'production') {
       url = 'https://api.alexbostock.co.uk/xkcd/latest';
@@ -43,20 +44,17 @@ class Xkcd extends React.PureComponent {
       url = 'http://localhost:4000/xkcd/latest';
     }
 
-    try {
-      const res = await axios.get(url);
-
-      this.setState({comic: res.data});
-    } catch (err) {
-      console.error(err);
-    }
+    axios.get(url, { cancelToken: this.state.axiosCancelToken.token })
+      .then(res => this.setState({comic: res.data}))
+      .catch(err => {
+        if (err.message !== 'Cancelled on unmount') {
+          console.error(err);
+        }
+      });
   }
 
   componentDidMount() {
-    const timer = setIntervalAsync(
-      this.refresh.bind(this),
-      60 * 60 * 1000
-    );
+    const timer = setInterval(this.refresh.bind(this), 60 * 60 * 1000);
 
     this.setState({timer: timer});
 
@@ -65,8 +63,10 @@ class Xkcd extends React.PureComponent {
 
   componentWillUnmount() {
     if (this.state.timer) {
-      clearIntervalAsync(this.state.timer);
+      clearInterval(this.state.timer);
     }
+
+    this.state.axiosCancelToken.cancel('Cancelled on unmount');
   }
 }
 

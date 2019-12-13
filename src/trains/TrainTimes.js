@@ -1,7 +1,5 @@
 import React from 'react';
 import axios from 'axios';
-import { setIntervalAsync } from 'set-interval-async/dynamic';
-import { clearIntervalAsync } from 'set-interval-async';
 
 import Services from './Services';
 
@@ -11,6 +9,7 @@ class TrainTimes extends React.PureComponent {
 
     this.state = {
       trains: {},
+      axiosCancelToken: axios.CancelToken.source(),
     };
   }
 
@@ -34,7 +33,7 @@ class TrainTimes extends React.PureComponent {
     )
   }
 
-  async refresh() {
+  refresh() {
     let baseURL
     if (process.env.NODE_ENV === 'production') {
       baseURL = 'https://api.alexbostock.co.uk/trains';
@@ -46,13 +45,13 @@ class TrainTimes extends React.PureComponent {
     endPoint += this.props.arrivals ? 'arrivals' : 'departures';
     const url = baseURL + endPoint;
 
-    try {
-      const res = await axios.get(url);
-
-      this.setState({trains: res.data});
-    } catch (error) {
-      console.error(error);
-    }
+    axios.get(url, { cancelToken: this.state.axiosCancelToken.token })
+      .then(res => this.setState({trains: res.data}))
+      .catch(err => {
+        if (err.message !== 'Cancelled on unmount') {
+          console.error(err);
+        }
+      });
   }
 
   componentDidMount() {
@@ -60,7 +59,7 @@ class TrainTimes extends React.PureComponent {
       return;
     }
     
-    const timer = setIntervalAsync(this.refresh.bind(this), 30 * 1000);
+    const timer = setInterval(this.refresh.bind(this), 30 * 1000);
 
     this.setState({
       timer: timer,
@@ -72,8 +71,10 @@ class TrainTimes extends React.PureComponent {
 
   componentWillUnmount() {
     if (this.state.timer) {
-      clearIntervalAsync(this.state.timer);
+      clearInterval(this.state.timer);
     }
+
+    this.state.axiosCancelToken.cancel('Cancelled on unmount');
   }
 }
 
