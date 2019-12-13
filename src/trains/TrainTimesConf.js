@@ -155,7 +155,7 @@ class TrainTimesConf extends React.PureComponent {
       url = 'http://localhost:4000/trains/stations';
     }
 
-    axios.get(url, { cancelToken: this.state.axiosCancelToken })
+    axios.get(url, { cancelToken: this.state.axiosCancelToken.token })
       .then((res) => {
         const stations = {};
         res.data.forEach((s) => stations[s.crs] = s.name);
