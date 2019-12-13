@@ -1,0 +1,16 @@
+body {
+    background-color: black;
+    color: white;
+
+    --main-colour: white;
+    --background-colour: black;
+    --accent-colour:  rgb(204,0,102);
+}
+
+.clock > span {
+    background-color: black;
+}
+
+.invalidInput {
+    border: 1px solid var(--accent-colour);
+}

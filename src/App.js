@@ -10,7 +10,19 @@ import Clock from './clock/Clock';
 import TrainTimes from './trains/TrainTimes';
 import TrainTimesConf from './trains/TrainTimesConf';
 import Xkcd from './xkcd/Xkcd';
-import NewWidget from './NewWidget';
+import GlobalConf from './GlobalConf';
+import Theme from './Theme';
+
+const themesAvailable = [
+  {
+    key: 'light',
+    name: 'Light (default)',
+  },
+  {
+    key: 'dark',
+    name: 'Dark',
+  },
+];
 
 const widgetsAvailable = {
   'bookmarks': {
@@ -147,18 +159,21 @@ class App extends React.Component {
   }
 
   render() {
-    const newWidgetForm = (
-      <NewWidget
-        key="newWidgetWidget"
+    const globalConfWidget = (
+      <GlobalConf
+        key="globalConf"
         render={this.state.configMode}
+        currentTheme={this.state.data.get('theme')}
+        themes={themesAvailable}
         widgets={widgetsAvailable}
-        add={this.addWidget.bind(this)}
+        addWidget={this.addWidget.bind(this)}
+        setTheme={this.setTheme.bind(this)}
       />
     );
 
     const widgets = this.state.data.get('widgets')
       .map((config, i) => this.renderWidget(config, i))
-      .concat([newWidgetForm]);
+      .concat([globalConfWidget]);
 
     return (
       <div className="app">
@@ -172,6 +187,8 @@ class App extends React.Component {
             </button>
           </div>
         </footer>
+
+        <Theme themeKey={this.state.data.get('theme')} />
       </div>
     );
   }
@@ -219,6 +236,12 @@ class App extends React.Component {
 
     this.updateState(data);
   }
+
+  setTheme(key) {
+    const data = this.state.data.set('theme', key);
+
+    this.updateState(data);
+  }
 }
 
 function defaultWidgetState(key) {
@@ -227,6 +250,7 @@ function defaultWidgetState(key) {
 
 function defaultState() {
   return Map({
+    theme: null,
     widgets: List(Object.keys(widgetsAvailable)).map(defaultWidgetState),
   });
 }

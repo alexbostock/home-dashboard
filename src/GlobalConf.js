@@ -1,0 +1,58 @@
+import React from 'react';
+
+class GlobalConf extends React.PureComponent {
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      theme: this.props.currentTheme || 'light',
+      widget: 'no-selection',
+    };
+  }
+
+  renderThemeOption(theme) {
+    return <option value={theme.key} key={theme.key}>{theme.name}</option>;
+  }
+
+  renderWidgetOption(key) {
+    return <option value={key} key={key}>{this.props.widgets[key].name}</option>;
+  }
+
+  setTheme(event) {
+    this.setState({theme: event.target.value});
+    this.props.setTheme(event.target.value);
+  }
+
+  render() {
+    if (this.props.render) {
+      return (
+        <div className="widget">
+          <form className="globalConfForm">
+            <label htmlFor="addWidgetSelect">Add new widget</label>
+            <select 
+              id="addWidgetSelect"
+              value={this.state.widget}
+              onChange={e => this.props.addWidget(e.target.value)}
+            >
+              <option value="no-selection" disabled="true">Select widget type</option>
+              {Object.keys(this.props.widgets).map(this.renderWidgetOption.bind(this))}
+            </select>
+
+            <label htmlFor="themeSelect">Select theme</label>
+            <select
+              id="themeSelect"
+              value={this.state.theme}
+              onChange={this.setTheme.bind(this)}
+            >
+              {this.props.themes.map(this.renderThemeOption.bind(this))}
+            </select>
+          </form>
+        </div>
+      );
+    } else {
+      return null;
+    }
+  }
+}
+
+export default GlobalConf;
