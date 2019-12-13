@@ -27,6 +27,8 @@ class GlobalConf extends React.PureComponent {
     if (this.props.render) {
       return (
         <div className="widget">
+          <h3>Global Settings</h3>
+
           <form className="globalConfForm">
             <label htmlFor="addWidgetSelect">Add new widget</label>
             <select 
@@ -34,7 +36,7 @@ class GlobalConf extends React.PureComponent {
               value={this.state.widget}
               onChange={e => this.props.addWidget(e.target.value)}
             >
-              <option value="no-selection" disabled="true">Select widget type</option>
+              <option value="no-selection" disabled>Select widget type</option>
               {Object.keys(this.props.widgets).map(this.renderWidgetOption.bind(this))}
             </select>
 
@@ -46,6 +48,13 @@ class GlobalConf extends React.PureComponent {
             >
               {this.props.themes.map(this.renderThemeOption.bind(this))}
             </select>
+
+            <button disabled={!this.props.canUndo} onClick={this.props.undo}>
+              Undo
+            </button>
+            <button disabled={!this.props.canRedo} onClick={this.props.redo}>
+              Redo
+            </button>
           </form>
         </div>
       );

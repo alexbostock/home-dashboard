@@ -57,7 +57,9 @@ class App extends React.Component {
 
     this.state = {
       data: loadSavedState(),
-      unsavedChanges: false,
+      dataHistory: List(),
+      dataFuture: List(),
+
       configMode: false,
     };
   }
@@ -67,10 +69,35 @@ class App extends React.Component {
   }
 
   updateState(newState) {
-    this.setState({data: newState}, () => {
-      const saved = saveState(this.state.data);
-      this.setState({unsavedChanges: !saved});
-    });
+    this.setState({
+      data: newState,
+      dataHistory: this.state.dataHistory.push(this.state.data),
+      dataFuture: List(),
+    }, () => saveState(this.state.data));
+  }
+
+  undo(event) {
+    event.preventDefault();
+
+    const data = this.state.dataHistory.last();
+
+    this.setState({
+      data: data,
+      dataHistory: this.state.dataHistory.pop(),
+      dataFuture: this.state.dataFuture.push(this.state.data),
+    }, () => saveState(this.state.data));
+  }
+
+  redo(event) {
+    event.preventDefault();
+
+    const data = this.state.dataFuture.last();
+
+    this.setState({
+      data: data,
+      dataHistory: this.state.dataHistory.push(this.state.data),
+      dataFuture: this.state.dataFuture.pop(),
+    }, () => saveState(this.state.data));
   }
 
   shouldComponentUpdate(nextProps, nextState) {
@@ -163,11 +190,18 @@ class App extends React.Component {
       <GlobalConf
         key="globalConf"
         render={this.state.configMode}
+
         currentTheme={this.state.data.get('theme')}
         themes={themesAvailable}
+        setTheme={this.setTheme.bind(this)}
+
         widgets={widgetsAvailable}
         addWidget={this.addWidget.bind(this)}
-        setTheme={this.setTheme.bind(this)}
+
+        canUndo={this.state.dataHistory.count() > 0}
+        canRedo={this.state.dataFuture.count() > 0}
+        undo={this.undo.bind(this)}
+        redo={this.redo.bind(this)}
       />
     );
 
