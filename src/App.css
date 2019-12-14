@@ -36,6 +36,22 @@ td, th {
     width: min-content;
 }
 
+th > div {
+    display: flex;
+}
+
+th > div > span {
+    display: block;
+}
+
+th > div > span:nth-child(1) {
+    margin-right: 1em;
+}
+
+th > div > span:nth-child(2) {
+    margin-left: auto;
+}
+
 ul {
     list-style-type: none;
     padding: 0;
@@ -93,15 +109,21 @@ button:disabled {
     display: grid;
 }
 
-@media (min-width: 800px) {
+@media (min-width: 700px) {
     .app {
         grid-template-columns: repeat(2, 1fr);
     }
 }
 
-@media (min-width: 1200px) {
+@media (min-width: 1050px) {
     .app {
         grid-template-columns: repeat(3, 1fr);
+    }
+}
+
+@media (min-width: 1400px) {
+    .app {
+        grid-template-columns: repeat(4, 1fr);
     }
 }
 

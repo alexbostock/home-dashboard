@@ -35,8 +35,12 @@ function renderService(service) {
       key={service.scheduledTime + service.destination}
     >
       <tr>
-        <th>{leftpad(service.scheduledTime)}</th>
-        <th>{service.destination}</th>
+        <th colSpan="2">
+          <div>
+            <span>{leftpad(service.scheduledTime)}</span>
+            <span>{service.destination}</span>
+          </div>
+        </th>
       </tr>
       <tr>
         <td>Platform {service.platform}</td>
