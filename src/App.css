@@ -251,6 +251,10 @@ form > select {
     padding: 0.5em;
 }
 
+.widgetMenuBar + * {
+    height: calc(100% - 4em);
+}
+
 .widgetMenuBar > button {
     margin-left: auto;
 }
