@@ -2,14 +2,10 @@ import React from 'react';
 import axios from 'axios';
 
 class Xkcd extends React.PureComponent {
-  constructor() {
-    super();
-
-    this.state = {
-      comic: null,
-      axiosCancelToken: axios.CancelToken.source(),
-    };
-  }
+  state = {
+    comic: null,
+    axiosCancelToken: axios.CancelToken.source(),
+  };
 
   render() {
     let body;

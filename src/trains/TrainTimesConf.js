@@ -3,17 +3,13 @@ import axios from 'axios';
 import { Map } from 'immutable';
 
 class TrainTimesConf extends React.PureComponent {
-  constructor(props) {
-    super(props);
-
-    this.state = {
-      station: this.props.station ? printStation(this.props.station) : '',
-      arrivals: Boolean(props.arrivals),
-      numServices: this.props.numServices ? this.props.numServices : 3,
-      stations: {},
-      axiosCancelToken: axios.CancelToken.source(),
-    };
-  }
+  state = {
+    station: this.props.station ? printStation(this.props.station) : '',
+    arrivals: Boolean(this.props.arrivals),
+    numServices: this.props.numServices ? this.props.numServices : 3,
+    stations: {},
+    axiosCancelToken: axios.CancelToken.source(),
+  };
 
   valid(crs = this.state.station) {
     crs = parsePrintedStation(crs);
@@ -29,7 +25,7 @@ class TrainTimesConf extends React.PureComponent {
       || this.state.numServices !== this.props.numServices;
   }
 
-  updateStation(event) {
+  updateStation = (event) => {
     let value = event.target.value;
     if (this.valid(value)) {
       value = printStation(value, this.state.stations[value]);
@@ -47,12 +43,12 @@ class TrainTimesConf extends React.PureComponent {
     });
   }
 
-  updateArrivals(event) {
-    this.setState({arrivals: Boolean(event.target.value)}, () => this.saveState());
+  updateArrivals = (event) => {
+    this.setState({arrivals: Boolean(event.target.value)}, this.saveState);
   }
 
-  updateNumServices(event) {
-    this.setState({numServices: event.target.value}, () => this.saveState());
+  updateNumServices = (event) => {
+    this.setState({numServices: event.target.value}, this.saveState);
   }
 
   saveState() {
@@ -88,7 +84,7 @@ class TrainTimesConf extends React.PureComponent {
             className={this.valid() ? 'stationInput' : 'stationInput invalidInput'}
             list={'stationOptions' + widgetIndex}
             value={station}
-            onChange={(e) => this.updateStation(e)}
+            onChange={this.updateStation}
             placeholder="Station name (CRS)"
           />
           <datalist id={'stationOptions' + widgetIndex}>
@@ -104,7 +100,7 @@ class TrainTimesConf extends React.PureComponent {
             id={'departuresButton' + widgetIndex}
             value=""
             checked={!this.state.arrivals}
-            onChange={(e) => this.updateArrivals(e)}
+            onChange={this.updateArrivals}
           />
 
           <label htmlFor={'arrivalsButton' + widgetIndex}>
@@ -116,7 +112,7 @@ class TrainTimesConf extends React.PureComponent {
             id={'arrivalsButton' + widgetIndex}
             value="truthy"
             checked={this.state.arrivals}
-            onChange={(e) => this.updateArrivals(e)}
+            onChange={this.updateArrivals}
           />
 
           <label htmlFor={'numServicesInput' + widgetIndex}>
@@ -129,7 +125,7 @@ class TrainTimesConf extends React.PureComponent {
             min="1"
             max="99"
             value={this.state.numServices}
-            onChange={(e) => this.updateNumServices(e)}
+            onChange={this.updateNumServices}
           />
         </form>
       </div>

@@ -1,13 +1,9 @@
 import React from 'react';
 
 class Clock extends React.PureComponent {
-  constructor() {
-    super();
-
-    this.state = {
-      time: null,
-    };
-  }
+  state = {
+    time: null,
+  };
 
   render() {
     return (

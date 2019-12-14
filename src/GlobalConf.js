@@ -1,14 +1,10 @@
 import React from 'react';
 
 class GlobalConf extends React.PureComponent {
-  constructor(props) {
-    super(props);
-
-    this.state = {
-      theme: this.props.currentTheme || 'light',
-      widget: 'no-selection',
-    };
-  }
+  state = {
+    theme: this.props.currentTheme || 'light',
+    widget: 'no-selection',
+  };
 
   renderThemeOption = (theme) => {
     return <option value={theme.key} key={theme.key}>{theme.name}</option>;

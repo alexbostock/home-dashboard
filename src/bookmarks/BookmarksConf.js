@@ -2,14 +2,10 @@ import React from 'react';
 import { Map } from 'immutable';
 
 class BookmarksConf extends React.PureComponent {
-  constructor(props) {
-    super(props);
-
-    this.state = {
-      newName: '',
-      newUrl: 'https://',
-    };
-  }
+  state = {
+    newName: '',
+    newUrl: 'https://',
+  };
 
   renderItem(item, index) {
     if (item.has('name') && item.has('url')) {
@@ -41,18 +37,13 @@ class BookmarksConf extends React.PureComponent {
   render() {
     const items = this.props.items.map((item, i) => this.renderItem(item, i));
 
-    const submitFunc = (event) => {
-      event.preventDefault();
-      this.addBookmark();
-    }
-
     return (
       <div>
         <h3>Bookmarks (Drag to reorder)</h3>
         <ul>
           {items}
           <li key="newBookmark">
-            <form className="newBookmark" onSubmit={submitFunc}>
+            <form className="newBookmark" onSubmit={this.addBookmark}>
               <div>
                 <input
                   type="text"
@@ -77,7 +68,9 @@ class BookmarksConf extends React.PureComponent {
     );
   }
 
-  addBookmark() {
+  addBookmark = (event) => {
+    event.preventDefault();
+
     const newBookmark = Map({
       name: this.state.newName,
       url: this.state.newUrl,
@@ -95,6 +88,17 @@ class BookmarksConf extends React.PureComponent {
     this.props.updateState(this.props.items.delete(index));
   }
 
+  swapBookmarks(index1, index2) {
+    const bookmark1 = this.props.items.get(index1);
+    const bookmark2 = this.props.items.get(index2);
+
+    const bookmarks = this.props.items
+      .set(index2, bookmark1)
+      .set(index1, bookmark2);
+    
+    this.props.updateState(bookmarks);
+  }
+
   onDragStart(event, index) {
     event.dataTransfer.setData('draggedIndex', index);
     event.dataTransfer.setData('bookmark', true);
@@ -105,14 +109,7 @@ class BookmarksConf extends React.PureComponent {
 
     const draggedIndex = event.dataTransfer.getData('draggedIndex');
 
-    const bookmark1 = this.props.items.get(draggedIndex);
-    const bookmark2 = this.props.items.get(index);
-
-    const bookmarks = this.props.items
-      .set(index, bookmark1)
-      .set(draggedIndex, bookmark2);
-
-    this.props.updateState(bookmarks);
+    this.swapBookmarks(draggedIndex, index);
   }
 }
 

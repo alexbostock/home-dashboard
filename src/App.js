@@ -11,17 +11,13 @@ import Theme from './Theme';
 import stateManagement from './stateManagement';
 
 class App extends React.Component {
-  constructor() {
-    super();
+  state = {
+    data: stateManagement.loadSavedState(),
+    dataHistory: List(),
+    dataFuture: List(),
 
-    this.state = {
-      data: stateManagement.loadSavedState(),
-      dataHistory: List(),
-      dataFuture: List(),
-
-      configMode: false,
-    };
-  }
+    configMode: false,
+  };
 
   toggleConfigMode() {
     this.setState({configMode: !this.state.configMode});

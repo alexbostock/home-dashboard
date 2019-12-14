@@ -4,14 +4,10 @@ import axios from 'axios';
 import Services from './Services';
 
 class TrainTimes extends React.PureComponent {
-  constructor(props) {
-    super(props);
-
-    this.state = {
-      trains: {},
-      axiosCancelToken: axios.CancelToken.source(),
-    };
-  }
+  state = {
+    trains: {},
+    axiosCancelToken: axios.CancelToken.source(),
+  };
 
   render() {
     let body
