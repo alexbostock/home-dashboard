@@ -88,7 +88,7 @@ function Widget(props) {
         onDrop={e => onDrop(e, index, props.swapWidgets)}
       >
         <div className="widgetMenuBar">
-          Drag widget to reposition
+          <span>Drag widget to reposition</span>
           <button onClick={() => props.deleteWidget(index)}>Delete</button>
         </div>
         {widget}

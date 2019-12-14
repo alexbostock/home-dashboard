@@ -248,15 +248,25 @@ form > select {
     color: var(--accent-colour);
     border-bottom: 1px solid var(--accent-colour);
     margin-bottom: 1em;
-    padding: 0.5em;
+
+    padding-bottom: 0.8em;
+    padding-top: 0.4em;
+
+    box-sizing: border-box;
+    height: 3.4em;
 }
 
 .widgetMenuBar + * {
-    height: calc(100% - 4em);
+    height: calc(100% - 4.4em);
+}
+
+.widgetMenuBar > span {
+    padding: calc(0.4em + 1px);
 }
 
 .widgetMenuBar > button {
     margin-left: auto;
+    margin-right: 0.4em;
 }
 
 select {
