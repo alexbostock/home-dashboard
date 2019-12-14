@@ -22,7 +22,7 @@ class BookmarksConf extends React.PureComponent {
             {item.get('name')}
           </a>
 
-          <button onClick={() => this.removeBookmark(index)}>
+          <button type="button" onClick={() => this.removeBookmark(index)}>
             Delete
           </button>
         </li>
@@ -60,7 +60,7 @@ class BookmarksConf extends React.PureComponent {
                   placeholder="URL"
                 />
               </div>
-              <button className="addBookmarkButton">Add</button>
+              <button type="submit" className="addBookmarkButton">Add</button>
             </form>
           </li>
         </ul>

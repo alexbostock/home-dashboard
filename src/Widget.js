@@ -89,7 +89,7 @@ function Widget(props) {
       >
         <div className="widgetMenuBar">
           <span>Drag widget to reposition</span>
-          <button onClick={() => props.deleteWidget(index)}>Delete</button>
+          <button type="button" onClick={() => props.deleteWidget(index)}>Delete</button>
         </div>
         {widget}
       </div>

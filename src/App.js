@@ -19,7 +19,7 @@ class App extends React.Component {
     configMode: false,
   };
 
-  toggleConfigMode() {
+  toggleConfigMode = () => {
     this.setState({configMode: !this.state.configMode});
   }
 
@@ -141,7 +141,7 @@ class App extends React.Component {
           <p>View on <a href="https://github.com/alexbostock/home-dashboard">GitHub</a>.</p>
           <p>Train data from <a href="https://www.realtimetrains.co.uk/">Realtime Trains</a>.</p>
           <div>
-            <button onClick={() => this.toggleConfigMode()}>
+            <button type="button" onClick={this.toggleConfigMode}>
               {this.state.configMode ? 'Go back' : 'Settings'}
             </button>
           </div>

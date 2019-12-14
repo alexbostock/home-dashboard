@@ -45,10 +45,18 @@ class GlobalConf extends React.PureComponent {
               {this.props.themes.map(this.renderThemeOption)}
             </select>
 
-            <button disabled={!this.props.canUndo} onClick={this.props.undo}>
+            <button
+              type="button"
+              disabled={!this.props.canUndo}
+              onClick={this.props.undo}
+            >
               Undo
             </button>
-            <button disabled={!this.props.canRedo} onClick={this.props.redo}>
+            <button
+              type="button"
+              disabled={!this.props.canRedo}
+              onClick={this.props.redo}
+            >
               Redo
             </button>
           </form>
