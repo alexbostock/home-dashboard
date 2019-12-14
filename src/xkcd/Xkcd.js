@@ -36,7 +36,7 @@ class Xkcd extends React.PureComponent {
     );
   }
 
-  refresh() {
+  refresh = () => {
     let url;
     if (process.env.NODE_ENV === 'production') {
       url = 'https://api.alexbostock.co.uk/xkcd/latest';
@@ -54,7 +54,7 @@ class Xkcd extends React.PureComponent {
   }
 
   componentDidMount() {
-    const timer = setInterval(this.refresh.bind(this), 60 * 60 * 1000);
+    const timer = setInterval(this.refresh, 60 * 60 * 1000);
 
     this.setState({timer: timer});
 

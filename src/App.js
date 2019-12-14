@@ -76,7 +76,7 @@ class App extends React.Component {
     }, () => saveState(this.state.data));
   }
 
-  undo(event) {
+  undo = (event) => {
     event.preventDefault();
 
     const data = this.state.dataHistory.last();
@@ -88,7 +88,7 @@ class App extends React.Component {
     }, () => saveState(this.state.data));
   }
 
-  redo(event) {
+  redo = (event) => {
     event.preventDefault();
 
     const data = this.state.dataFuture.last();
@@ -193,15 +193,15 @@ class App extends React.Component {
 
         currentTheme={this.state.data.get('theme')}
         themes={themesAvailable}
-        setTheme={this.setTheme.bind(this)}
+        setTheme={this.setTheme}
 
         widgets={widgetsAvailable}
-        addWidget={this.addWidget.bind(this)}
+        addWidget={this.addWidget}
 
         canUndo={this.state.dataHistory.count() > 0}
         canRedo={this.state.dataFuture.count() > 0}
-        undo={this.undo.bind(this)}
-        redo={this.redo.bind(this)}
+        undo={this.undo}
+        redo={this.redo}
       />
     );
 
@@ -256,7 +256,7 @@ class App extends React.Component {
     this.updateState(data);
   }
 
-  addWidget(type) {
+  addWidget = (type) => {
     const widgets = this.state.data.get('widgets')
       .concat([defaultWidgetState(type)]);
     
@@ -271,7 +271,7 @@ class App extends React.Component {
     this.updateState(data);
   }
 
-  setTheme(key) {
+  setTheme = (key) => {
     const data = this.state.data.set('theme', key);
 
     this.updateState(data);

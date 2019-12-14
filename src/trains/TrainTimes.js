@@ -33,7 +33,7 @@ class TrainTimes extends React.PureComponent {
     )
   }
 
-  refresh() {
+  refresh = () => {
     let baseURL
     if (process.env.NODE_ENV === 'production') {
       baseURL = 'https://api.alexbostock.co.uk/trains';
@@ -59,7 +59,7 @@ class TrainTimes extends React.PureComponent {
       return;
     }
     
-    const timer = setInterval(this.refresh.bind(this), 30 * 1000);
+    const timer = setInterval(this.refresh, 30 * 1000);
 
     this.setState({
       timer: timer,

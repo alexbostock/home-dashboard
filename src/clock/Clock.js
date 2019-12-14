@@ -17,7 +17,7 @@ class Clock extends React.PureComponent {
     );
   }
 
-  refresh() {
+  refresh = () => {
     this.setState({
       time: this.formatTime(new Date()),
     });
@@ -35,7 +35,7 @@ class Clock extends React.PureComponent {
   }
 
   componentDidMount() {
-    const timer = setInterval(this.refresh.bind(this), 100);
+    const timer = setInterval(this.refresh, 100);
 
     this.setState({timer: timer});
 

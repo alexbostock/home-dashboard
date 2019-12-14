@@ -10,15 +10,15 @@ class GlobalConf extends React.PureComponent {
     };
   }
 
-  renderThemeOption(theme) {
+  renderThemeOption = (theme) => {
     return <option value={theme.key} key={theme.key}>{theme.name}</option>;
   }
 
-  renderWidgetOption(key) {
+  renderWidgetOption = (key) => {
     return <option value={key} key={key}>{this.props.widgets[key].name}</option>;
   }
 
-  setTheme(event) {
+  setTheme = (event) => {
     this.setState({theme: event.target.value});
     this.props.setTheme(event.target.value);
   }
@@ -37,16 +37,16 @@ class GlobalConf extends React.PureComponent {
               onChange={e => this.props.addWidget(e.target.value)}
             >
               <option value="no-selection" disabled>Select widget type</option>
-              {Object.keys(this.props.widgets).map(this.renderWidgetOption.bind(this))}
+              {Object.keys(this.props.widgets).map(this.renderWidgetOption)}
             </select>
 
             <label htmlFor="themeSelect">Select theme</label>
             <select
               id="themeSelect"
               value={this.state.theme}
-              onChange={this.setTheme.bind(this)}
+              onChange={this.setTheme}
             >
-              {this.props.themes.map(this.renderThemeOption.bind(this))}
+              {this.props.themes.map(this.renderThemeOption)}
             </select>
 
             <button disabled={!this.props.canUndo} onClick={this.props.undo}>
