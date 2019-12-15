@@ -16,7 +16,7 @@ function Services(props) {
 
   return (
     <div>
-      <p class="TrainTimesCaption">
+      <p className="TrainTimesCaption">
         <strong>{caption} {props.trains.location}</strong>
       </p>
       {trains.length > 0 ? <table>{trains}</table> : <p>No upcoming trains.</p>}

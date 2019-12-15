@@ -53,7 +53,7 @@ h3 {
     animation: glow 1s ease-in-out infinite alternate;
 }
 
-@-webkit-keyframes glow {
+@keyframes glow {
     from {
       text-shadow: 
       0 0 10px #ffffff, 
@@ -160,7 +160,7 @@ button:hover {
 
 @font-face {
     font-family: 'Double Feature';
-    src: url('https://dl.dropbox.com/s/p9cu1ovaocf48y4/DoubleFeature21.ttf');
+    src: url('../assets/DoubleFeature21.ttf');
 }
 
 .invalidInput {
