@@ -14,6 +14,10 @@ const themesAvailable = [
     key: 'spoopy',
     name: 'Sp00py (by Al)',
   },
+  {
+    key: 'festive',
+    name: 'Festive',
+  }
 ];
 
 const widgetsAvailable = {

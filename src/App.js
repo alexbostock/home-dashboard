@@ -7,6 +7,7 @@ import './App.css';
 import Widget from './Widget';
 import GlobalConf from './GlobalConf';
 import Theme from './Theme';
+import Snowfall from './snow/Snowfall';
 
 import stateManagement from './stateManagement';
 
@@ -148,6 +149,7 @@ class App extends React.Component {
         </footer>
 
         <Theme themeKey={this.state.data.get('theme')} />
+        {this.state.data.get('theme') === 'festive' ? <Snowfall /> : null}
       </div>
     );
   }

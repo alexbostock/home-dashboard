@@ -1,9 +1,7 @@
 body {
-    background-color: rgb(37, 37, 37);
     background-image: url('https://i.imgur.com/hfi1gb2.jpg');
     background-blend-mode: overlay; 
     background-position: center top;
-    color: rgb(216, 216, 216);
 
     --main-colour: rgb(216, 216, 216);
     --background-colour: rgb(37, 37, 37);
@@ -28,13 +26,13 @@ a:hover {
     box-shadow: 3px 3px 7px rgb(0, 0, 0);
 }
 
-.widget .TrainTimesCaption, .widget h4 {
+.widget .trainTimesCaption, .widget h4 {
     color: var(--main-colour);
     font-size: 17px;
     text-align: center;
 }
 
-.widget .TrainTimesCaption:after {
+.widget .trainTimesCaption:after {
     content: " Spooktion";
     font-weight: bold;
 }

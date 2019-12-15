@@ -78,10 +78,12 @@ function Widget(props) {
     widget = renderWidgetComponent(config);
   }
 
+  const className = config.get('type') === 'clock' ? 'widget clockWidget' : 'widget';
+
   if (props.configMode) {
     return (
       <div
-        className="widget"
+        className={className}
         draggable="true"
         onDragStart={e => onDragStart(e, index)}
         onDragOver={e => e.preventDefault()}
@@ -95,7 +97,7 @@ function Widget(props) {
       </div>
     )
   } else {
-    return <div className="widget" key={config + index}>{widget}</div>;
+    return <div className={className} key={config + index}>{widget}</div>;
   }
 }
 

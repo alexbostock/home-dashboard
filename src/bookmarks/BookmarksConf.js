@@ -39,7 +39,7 @@ class BookmarksConf extends React.PureComponent {
 
     return (
       <div>
-        <h3>Bookmarks (Drag to reorder)</h3>
+        <h3>Bookmarks: Drag to reorder</h3>
         <ul>
           {items}
           <li key="newBookmark">

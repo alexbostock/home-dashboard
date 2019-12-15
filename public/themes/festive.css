@@ -1,0 +1,122 @@
+body {
+    --main-colour: rgb(110, 46, 46);
+    --background-colour: white;
+    --accent-colour: darkgreen;
+
+    color: black;
+}
+
+.backdrop {
+    overflow: hidden;
+
+    position: fixed;
+    top: 0; right: 0; bottom: 0; left: 0;
+
+    z-index: -10;
+
+    background-image: url('https://cdn.pixabay.com/photo/2019/12/08/09/34/winter-4680713_1280.jpg');
+    background-image: url('https://cdn.pixabay.com/photo/2019/12/02/03/26/snow-4666831_1280.jpg');
+    background-size: cover;
+}
+
+h3 {
+    color: darkred;
+    font-family: 'Candy Cane';
+    font-size: 2em;
+    text-align: center;
+    margin-bottom: 0.5em;
+}
+
+table, .clock, .bookmark {
+    font-family: 'Gentium Book Basic', serif;
+    font-weight: 400;
+}
+
+.train-service {
+    border-color: black;
+}
+
+.bookmark > a {
+    font-size: 1.2em;
+}
+
+a, button {
+    color: black;
+}
+
+a:hover, button:hover, .bookmark > a:hover {
+    color: var(--main-colour);
+    border-color: var(--main-colour);
+}
+
+table td {
+    font-style: italic;
+}
+
+.trainTimeHours:after {
+    content: ':';
+}
+
+.widget {
+    background-color: var(--background-colour);
+    z-index: 10;
+}
+
+.clockWidget {
+    background-color: transparent;
+    border-width: 1em;
+    padding-bottom: 0;
+}
+
+.clock:before {
+    content: '';
+    height: 5em;
+}
+
+.clock > span {
+    font-size: 2.4em;
+    border-color: black;
+    border-width: 2px;
+    background-color: rgb(231, 228, 220);
+
+    margin-bottom: 0;
+    padding: 5% 5% 3% 5%;
+}
+
+.snowflake {
+    position: absolute;
+}
+
+.waiting {
+    top: -20%;
+}
+
+.falling {
+    top: 110%;
+
+    transition-property: top, left;
+    transition-timing-function: linear;
+}
+
+@font-face {
+    font-family: 'Candy Cane';
+    src: url('../assets/Candcu__.ttf');
+}
+
+@font-face {
+    font-family: 'Gentium Book Basic';
+    font-style: italic;
+    font-weight: 400;
+    font-display: swap;
+    src: local('Gentium Book Basic Italic'), local('GentiumBookBasic-Italic'), url(https://fonts.gstatic.com/s/gentiumbookbasic/v10/pe0xMJCbPYBVokB1LHA9bbyaQb8ZGjc4VYF266L221c8h5o.woff2) format('woff2');
+    unicode-range: U+0100-024F, U+0259, U+1E00-1EFF, U+2020, U+20A0-20AB, U+20AD-20CF, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+
+@font-face {
+    font-family: 'Gentium Book Basic';
+    font-style: normal;
+    font-weight: 400;
+    font-display: swap;
+    src: local('Gentium Book Basic'), local('GentiumBookBasic'), url(https://fonts.gstatic.com/s/gentiumbookbasic/v10/pe0zMJCbPYBVokB1LHA9bbyaQb8ZGjc4XrF64aXU2Wc9.woff2) format('woff2');
+    unicode-range: U+0100-024F, U+0259, U+1E00-1EFF, U+2020, U+20A0-20AB, U+20AD-20CF, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}

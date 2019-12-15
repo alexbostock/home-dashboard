@@ -16,7 +16,7 @@ function Services(props) {
 
   return (
     <div>
-      <p className="TrainTimesCaption">
+      <p className="trainTimesCaption">
         <strong>{caption} {props.trains.location}</strong>
       </p>
       {trains.length > 0 ? <table>{trains}</table> : <p>No upcoming trains.</p>}
@@ -35,7 +35,7 @@ function renderService(service) {
       <tr>
         <th colSpan="2">
           <div>
-            <span>{leftpad(service.scheduledTime)}</span>
+            {leftpad(service.scheduledTime)}
             <span>{service.destination}</span>
           </div>
         </th>
@@ -51,7 +51,7 @@ function renderService(service) {
 
 function ontimenessMessage(scheduled, actual) {
   if (actual === null || actual === undefined) {
-    return 'Live data not available';
+    return 'No live data';
   } else if (scheduled === actual) {
     return <span className="ontime">On-time</span>;
   } else {
@@ -67,8 +67,14 @@ function ontimenessMessage(scheduled, actual) {
 }
 
 function leftpad(num) {
-  num = num.toString();
-  return new Array(4 - num.length).fill('0').join('') + num;
+  num = num.toString().split('');
+  const chars = new Array(4 - num.length).fill('0').concat(num);
+
+  return (
+    <span>
+      <span className="trainTimeHours">{chars.slice(0, 2).join('')}</span>
+      {chars.slice(2).join('')}
+    </span>);
 }
 
 // When comparing services running the same night but different sides of

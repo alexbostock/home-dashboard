@@ -1,7 +1,4 @@
 body {
-    background-color: black;
-    color: white;
-
     --main-colour: white;
     --background-colour: black;
     --accent-colour:  rgb(204,0,102);

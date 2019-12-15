@@ -1,0 +1,8 @@
+<svg width="480" height="480" xmlns="http://www.w3.org/2000/svg" xmlns:svg="http://www.w3.org/2000/svg">
+ <g class="layer">
+  <circle cx="240.5" cy="239.5" fill="none" id="svg_2" r="80" stroke="#000000"/>
+  <circle cx="240.5" cy="240.5" fill="none" id="svg_2" r="40" stroke="#000000"/>
+  <line fill="none" id="svg_4" stroke="#000000" x1="240.5" x2="240.5" y1="240.5" y2="320.5"/>
+  <path d="M 240.5 240.5 l 10 -17.32051 l 10 17.32051" id="svg_1" stroke="#000000"/>
+ </g>
+</svg>

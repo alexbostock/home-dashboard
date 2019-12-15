@@ -4,6 +4,9 @@ body {
     --main-colour: black;
     --background-colour: white;
     --accent-colour: rgb(85, 85, 85);
+
+    color: var(--main-colour);
+    background-color: var(--background-colour);
 }
 
 footer {
@@ -135,6 +138,7 @@ button:disabled {
 
 h3 {
     margin-top: 0;
+    margin-bottom: 1em;
 }
 
 .bookmark {
