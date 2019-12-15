@@ -1,0 +1,168 @@
+body {
+    background-color: rgb(37, 37, 37);
+    background-image: url('https://i.imgur.com/hfi1gb2.jpg');
+    background-blend-mode: overlay; 
+    background-position: center top;
+    color: rgb(216, 216, 216);
+
+    --main-colour: rgb(216, 216, 216);
+    --background-colour: rgb(37, 37, 37);
+    --accent-colour:  rgba(105,153,38);
+}
+
+a {
+    color: var(--accent-colour);
+    transition:all .2s linear;
+}
+
+a:hover {
+    color: rgb(235,97,35);
+}
+
+/* General Widget Styling */
+
+.widget {
+    background-color: rgb(20, 20, 20);
+    border: none;
+    border-radius: 0.4em;
+    box-shadow: 3px 3px 7px rgb(0, 0, 0);
+}
+
+.widget .TrainTimesCaption, .widget h4 {
+    color: var(--main-colour);
+    font-size: 17px;
+    text-align: center;
+}
+
+.widget .TrainTimesCaption:after {
+    content: " Spooktion";
+    font-weight: bold;
+}
+
+.widget h4:before {
+    content: "Creepy ";
+}
+
+h3 {
+    color: #ffffff;
+    font-family: 'Double Feature';
+    font-size: 32px;
+    font-weight: normal;
+    letter-spacing: 3px;
+    text-align: center;
+    animation: glow 1s ease-in-out infinite alternate;
+}
+
+@-webkit-keyframes glow {
+    from {
+      text-shadow: 
+      0 0 10px #ffffff, 
+      0 0 20px #ffffff, 
+      0 0 30px #81d602, 
+      0 0 40px #81d602, 
+      0 0 50px #81d602, 
+      0 0 60px #81d602, 
+      0 0 70px #81d602;
+    }
+    
+    to {
+      text-shadow: 
+      0 0 20px #ffffff, 
+      0 0 30px #699926, 
+      0 0 40px #699926, 
+      0 0 50px #699926, 
+      0 0 60px #699926, 
+      0 0 70px #699926, 
+      0 0 80px #699926;
+    }
+  }
+
+/* Bookmarks Widget */
+
+.bookmark > a {
+    background-color: var(--background-colour);
+    color: var(--main-colour);
+    border: 1px solid transparent;
+    border-radius: 0.4em;
+    box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.6);
+    transition:all .3s linear;
+}
+
+.bookmark > a:hover {
+    background-color: rgb(15, 15, 15);
+    color: var(--accent-colour);
+    border-color: transparent;
+    box-shadow:inset 2px 2px 4px rgba(0, 0, 0, 1.0);
+}
+
+/* Train Widget */
+
+.train-service:nth-child(odd) {
+    background-color: var(--background-colour);
+    border: 1px solid transparent;
+}
+
+.train-service:nth-child(even) {
+    border: 1px solid transparent;
+}
+
+th {
+    color: var(--accent-colour);
+}
+
+td {
+    font-size: 14px;
+}
+
+/* Clock Widget */
+
+.clock > span {
+    background-color: var(--background-colour);
+    border: 1px solid transparent;
+    border-radius: 0.4em;
+    color: var(--accent-colour);
+    box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
+    font-size: 40px;
+}
+
+.clock span:before {
+    content: "🎃";
+    margin-right: 10px;
+}
+
+.clock span:after {
+    content: "🎃";
+    margin-left: 10px;
+}
+
+/* XKCD Widget */
+
+img {
+    filter: invert(1);
+}
+
+/* Buttons */
+
+input, button {
+    border: 1px solid transparent;
+    box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.6);
+    transition:all .3s linear;
+}
+
+button:hover {
+    background-color: rgb(15, 15, 15);
+    color: var(--accent-colour);
+    border-color: transparent;
+    box-shadow:inset 2px 2px 4px rgba(0, 0, 0, 1.0);
+}
+
+/* Fonts */
+
+@font-face {
+    font-family: 'Double Feature';
+    src: url('https://dl.dropbox.com/s/p9cu1ovaocf48y4/DoubleFeature21.ttf');
+}
+
+.invalidInput {
+    border: 1px solid var(--accent-colour);
+}
