@@ -14,3 +14,12 @@ body {
 .invalidInput {
     border: 1px solid var(--accent-colour);
 }
+
+.paginationControls > button {
+    color: var(--accent-colour);
+}
+
+.paginationControls > button:disabled {
+    color: var(--main-colour);
+    border-color: var(--main-colour);
+}

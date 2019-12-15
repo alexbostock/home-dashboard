@@ -16,6 +16,7 @@ class TrainTimes extends React.PureComponent {
         trains={this.state.trains}
         arrivals={this.props.arrivals}
         numServices={this.props.numServices}
+        servicesPerPage={this.props.servicesPerPage}
       />;
     } else {
       body = <p>No station specified.</p>;

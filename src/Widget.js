@@ -26,6 +26,7 @@ function renderWidgetComponent(config) {
           station={config.get('station')}
           arrivals={config.get('arrivals')}
           numServices={config.get('numServices')}
+          servicesPerPage={config.get('servicesPerPage')}
         />
       );
     case 'xkcd':
@@ -55,6 +56,7 @@ function renderConfWidgetComponent(config, index, updateFunc) {
           station={config.get('station')}
           arrivals={config.get('arrivals')}
           numServices={config.get('numServices')}
+          servicesPerPage={config.get('servicesPerPage')}
           updateState={update => updateFunc(index, update)}
           widgetIndex={index}
         />

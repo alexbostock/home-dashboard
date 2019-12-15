@@ -7,6 +7,7 @@ class TrainTimesConf extends React.PureComponent {
     station: this.props.station ? printStation(this.props.station) : '',
     arrivals: Boolean(this.props.arrivals),
     numServices: this.props.numServices ? this.props.numServices : 3,
+    servicesPerPage: this.props.servicesPerPage ? this.props.servicesPerPage : 3,
     stations: {},
     axiosCancelToken: axios.CancelToken.source(),
   };
@@ -22,7 +23,8 @@ class TrainTimesConf extends React.PureComponent {
 
     return (station !== propStation && this.valid())
       || this.state.arrivals !== this.props.arrivals
-      || this.state.numServices !== this.props.numServices;
+      || this.state.numServices !== this.props.numServices
+      || this.state.servicesPerPage !== this.props.servicesPerPage;
   }
 
   updateStation = (event) => {
@@ -51,6 +53,10 @@ class TrainTimesConf extends React.PureComponent {
     this.setState({numServices: event.target.value}, this.saveState);
   }
 
+  updateServicesPerPage = (event) => {
+    this.setState({servicesPerPage: event.target.value}, this.saveState);
+  }
+
   saveState() {
     if (!this.unsavedChanges()) {
       return;
@@ -59,12 +65,17 @@ class TrainTimesConf extends React.PureComponent {
     // If the station input is invalid, don't save it,
     // but don't let that block saving other properties.
     const crs = parsePrintedStation(this.valid() ? this.state.station : this.props.station);
+    const numServices = parseInt(this.state.numServices);
+    const servicesPerPage = parseInt(this.state.servicesPerPage);
+
+    const validNum = num => 1 <= num && num < 100;
 
     this.props.updateState(Map({
       type: 'live-trains',
       station: crs,
       arrivals: this.state.arrivals,
-      numServices: this.state.numServices,
+      numServices: validNum(numServices) ? numServices : 3,
+      servicesPerPage: validNum(servicesPerPage) ? servicesPerPage : 3,
     }));
   }
 
@@ -126,6 +137,19 @@ class TrainTimesConf extends React.PureComponent {
             max="99"
             value={this.state.numServices}
             onChange={this.updateNumServices}
+          />
+
+          <label htmlFor={'servicesPerPageInput' + widgetIndex}>
+            Services per page
+          </label>
+          <input
+            type="number"
+            id={'servicesPerPageInput' + widgetIndex}
+            step="1"
+            min="1"
+            max="99"
+            value={this.state.servicesPerPage}
+            onChange={this.updateServicesPerPage}
           />
         </form>
       </div>

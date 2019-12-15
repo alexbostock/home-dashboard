@@ -35,6 +35,7 @@ const widgetsAvailable = {
       station: 'STP',
       arrivals: false,
       numServices: 3,
+      servicesPerPage: 3,
     }),
   },
   'xkcd': {

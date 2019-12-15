@@ -1,25 +1,67 @@
-import React from 'react';
+import React, { useState } from 'react';
 
 function Services(props) {
+  const [currentPage, setCurrentPage] = useState(1);
+
   if (!props.trains || !props.trains.services) {
     return <p>No data.</p>;
   }
 
-  const numServicesToRender = props.numServices || 3;
+  let numServicesToRender = props.numServices;
+  if (numServicesToRender === undefined) {
+    numServicesToRender = 3;
+  }
+
+  const servicesPerPage = props.servicesPerPage || 3;
 
   const trains = props.trains.services
     .sort((a, b) => compareTimes(a.realTime, b.realTime))
     .slice(0, numServicesToRender)
-    .map(renderService);
+    .map(renderService)
+    .reduce((acc, service) => {
+      const [tables, next] = acc;
+      if (next.length === servicesPerPage) {
+        return [tables.concat([next]), [service]];
+      } else {
+        return [tables, next.concat([service])];
+      }
+    }, [[], []])
+    .reduce((first, second) => first.concat([second]))
+    .map((trains, i) => <table key={i} hidden={i !== currentPage - 1}>{trains}</table>);
 
   const caption = props.arrivals ? 'Arrivals at' : 'Departures from';
+
+  const paginationControls = (
+    <div className="paginationControls">
+      <button
+        type="button"
+        disabled={currentPage === 1}
+        onClick={() => setCurrentPage(currentPage - 1)}
+      >
+        &lt;
+      </button>
+
+      <span>Page {currentPage} of {trains.length}</span>
+
+      <button
+        type="button"
+        disabled={currentPage === trains.length}
+        onClick={() => setCurrentPage(currentPage + 1)}
+      >
+        &gt;
+      </button>
+    </div>
+  );
 
   return (
     <div>
       <p className="TrainTimesCaption">
         <strong>{caption} {props.trains.location}</strong>
       </p>
-      {trains.length > 0 ? <table>{trains}</table> : <p>No upcoming trains.</p>}
+      
+      {trains.length > 0 ? trains : <p>No upcoming trains.</p>}
+
+      {trains.length > 1 ? paginationControls : null}
     </div>
   );
 }
