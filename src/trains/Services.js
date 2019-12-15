@@ -15,7 +15,7 @@ function Services(props) {
   const servicesPerPage = props.servicesPerPage || 3;
 
   const trains = props.trains.services
-    .sort((a, b) => compareTimes(a.realTime, b.realTime))
+    .sort((a, b) => compTimes(a.realTime || a.scheduledTime, b.realTime || b.scheduledTime))
     .slice(0, numServicesToRender)
     .map(renderService)
     .reduce((acc, service) => {
@@ -83,7 +83,7 @@ function renderService(service) {
         </th>
       </tr>
       <tr>
-        <td>Platform {service.platform}</td>
+        <td>{service.platform ? `Platform ${service.platform}` : 'Unknown platform'}</td>
         <td>{ontimeness}</td>
       </tr>
       <tr><td colSpan="2">{service.operator}</td></tr>
@@ -117,7 +117,7 @@ function leftpad(num) {
 // midnight, chronological order is not the same as comparison of times.
 // This assmues that, if one train is expected between 1800 and 2359, and
 // another is expected between 0000 and 0559, the first is sooner.
-function compareTimes(t1, t2) {
+function compTimes(t1, t2) {
   const smaller = Math.min(t1, t2);
   const larger = Math.max(t1, t2);
 
