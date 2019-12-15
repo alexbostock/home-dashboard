@@ -7,7 +7,7 @@ function Services(props) {
 
   const numServicesToRender = props.numServices || 3;
 
-  const services = props.trains.services
+  const trains = props.trains.services
     .sort((a, b) => compareTimes(a.realTime, b.realTime))
     .slice(0, numServicesToRender)
     .map(renderService);
@@ -19,9 +19,7 @@ function Services(props) {
       <p class="TrainTimesCaption">
         <strong>{caption} {props.trains.location}</strong>
       </p>
-      <table>
-        {services}
-      </table>
+      {trains.length > 0 ? <table>{trains}</table> : <p>No upcoming trains.</p>}
     </div>
   );
 }
