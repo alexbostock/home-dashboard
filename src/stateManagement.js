@@ -10,6 +10,10 @@ const themesAvailable = [
     key: 'dark',
     name: 'Dark',
   },
+  {
+    key: 'spoopy',
+    name: 'Sp00py (by Al)',
+  },
 ];
 
 const widgetsAvailable = {

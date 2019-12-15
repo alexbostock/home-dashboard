@@ -16,7 +16,7 @@ function Services(props) {
 
   return (
     <div>
-      <p>
+      <p class="TrainTimesCaption">
         <strong>{caption} {props.trains.location}</strong>
       </p>
       <table>
