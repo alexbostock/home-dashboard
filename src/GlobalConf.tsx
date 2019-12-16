@@ -1,20 +1,22 @@
 import React from 'react';
 
-class GlobalConf extends React.PureComponent {
+import { List } from 'immutable';
+
+class GlobalConf extends React.PureComponent<GlobalConfProps, GlobalConfState> {
   state = {
     theme: this.props.currentTheme || 'light',
     widget: 'no-selection',
   };
 
-  renderThemeOption = (theme) => {
+  renderThemeOption = (theme: Theme) => {
     return <option value={theme.key} key={theme.key}>{theme.name}</option>;
   }
 
-  renderWidgetOption = (key) => {
+  renderWidgetOption = (key: string) => {
     return <option value={key} key={key}>{this.props.widgets[key].name}</option>;
   }
 
-  setTheme = (event) => {
+  setTheme = (event: React.ChangeEvent<HTMLSelectElement>) => {
     this.setState({theme: event.target.value});
     this.props.setTheme(event.target.value);
   }
@@ -66,6 +68,32 @@ class GlobalConf extends React.PureComponent {
       return null;
     }
   }
+}
+
+interface GlobalConfState {
+  theme: string;
+  widget: string;
+}
+
+interface GlobalConfProps {
+  render: boolean;
+
+  currentTheme: string; // Consider changing this to an enum
+  themes: List<Theme>;
+  setTheme(theme: string): void;
+
+  widgets: { [name: string]: {name: string}};
+  addWidget(widget: string): void;
+
+  canUndo: boolean;
+  canRedo: boolean;
+  undo(): void;
+  redo(): void;
+}
+
+interface Theme {
+  key: string;
+  name: string
 }
 
 export default GlobalConf;

@@ -1,17 +1,17 @@
 import React from 'react';
-import { Map } from 'immutable';
+import { List, Map } from 'immutable';
 
-class BookmarksConf extends React.PureComponent {
+class BookmarksConf extends React.PureComponent<BookmarksConfProps, {}> {
   state = {
     newName: '',
     newUrl: 'https://',
   };
 
-  renderItem(item, index) {
+  renderItem(item: Map<string, string>, index: number) {
     if (item.has('name') && item.has('url')) {
       return (
         <li
-          key={item}
+          key={item.toString()}
           className="bookmark"
           draggable="true"
           onDragStart={e => this.onDragStart(e, index)}
@@ -68,7 +68,7 @@ class BookmarksConf extends React.PureComponent {
     );
   }
 
-  addBookmark = (event) => {
+  addBookmark = (event: React.SyntheticEvent) => {
     event.preventDefault();
 
     const newBookmark = Map({
@@ -84,13 +84,13 @@ class BookmarksConf extends React.PureComponent {
     });
   }
 
-  removeBookmark(index) {
+  removeBookmark(index: number) {
     this.props.updateState(this.props.items.delete(index));
   }
 
-  swapBookmarks(index1, index2) {
-    const bookmark1 = this.props.items.get(index1);
-    const bookmark2 = this.props.items.get(index2);
+  swapBookmarks(index1: number, index2: number) {
+    const bookmark1 = this.props.items.get(index1)!;
+    const bookmark2 = this.props.items.get(index2)!;
 
     const bookmarks = this.props.items
       .set(index2, bookmark1)
@@ -99,18 +99,23 @@ class BookmarksConf extends React.PureComponent {
     this.props.updateState(bookmarks);
   }
 
-  onDragStart(event, index) {
-    event.dataTransfer.setData('draggedIndex', index);
-    event.dataTransfer.setData('bookmark', true);
+  onDragStart(event: React.DragEvent, index: number) {
+    event.dataTransfer.setData('draggedIndex', index.toString());
+    event.dataTransfer.setData('bookmark', true.toString());
   }
 
-  onDrop(event, index) {
+  onDrop(event: React.DragEvent, index: number) {
     event.preventDefault();
 
     const draggedIndex = event.dataTransfer.getData('draggedIndex');
 
-    this.swapBookmarks(draggedIndex, index);
+    this.swapBookmarks(parseInt(draggedIndex), index);
   }
+}
+
+interface BookmarksConfProps {
+  items: List<Map<string, string>>;
+  updateState(update: List<Map<string, string>>): void;
 }
 
 export default BookmarksConf;

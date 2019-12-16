@@ -168,12 +168,7 @@ class TrainTimesConf extends React.PureComponent {
   }
 
   componentDidMount() {
-    let url;
-    if (process.env.NODE_ENV === 'production') {
-      url = 'https://api.alexbostock.co.uk/trains/stations';
-    } else {
-      url = 'http://localhost:4000/trains/stations';
-    }
+    const url = 'https://api.alexbostock.co.uk/trains/stations';
 
     axios.get(url, { cancelToken: this.state.axiosCancelToken.token })
       .then((res) => {

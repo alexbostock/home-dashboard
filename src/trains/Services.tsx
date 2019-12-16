@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 
-function Services(props) {
+import { List } from 'immutable';
+
+function Services(props: ServicesProps) {
   const [currentPage, setCurrentPage] = useState(1);
 
   if (!props.trains || !props.trains.services) {
@@ -15,10 +17,14 @@ function Services(props) {
   const servicesPerPage = props.servicesPerPage || 3;
 
   const trains = props.trains.services
-    .sort((a, b) => compTimes(a.realTime || a.scheduledTime, b.realTime || b.scheduledTime))
+    .sort((a: Service, b: Service) => {
+      const aTime = a.realTime || a.scheduledTime;
+      const bTime = b.realTime || b.scheduledTime;
+      return compTimes(aTime, bTime);
+    })
     .slice(0, numServicesToRender)
     .map(renderService)
-    .reduce((acc, service) => {
+    .reduce((acc: Array<Array<any>>, service: any) => {
       const [tables, next] = acc;
       if (next.length === servicesPerPage) {
         return [tables.concat([next]), [service]];
@@ -26,8 +32,8 @@ function Services(props) {
         return [tables, next.concat([service])];
       }
     }, [[], []])
-    .reduce((first, second) => first.concat([second]))
-    .map((trains, i) => <table key={i} hidden={i !== currentPage - 1}>{trains}</table>);
+    .reduce((first: Array<Array<Service>>, second: Array<Service>) => first.concat([second]))
+    .map((trains: Array<Service>, i: number) => <table key={i} hidden={i !== currentPage - 1}>{trains}</table>);
 
   const caption = props.arrivals ? 'Arrivals at' : 'Departures from';
 
@@ -66,7 +72,7 @@ function Services(props) {
   );
 }
 
-function renderService(service) {
+function renderService(service: Service) {
   const ontimeness = ontimenessMessage(
     service.scheduledTime, service.realTime);
   return (
@@ -75,7 +81,7 @@ function renderService(service) {
       key={service.scheduledTime + service.destination}
     >
       <tr>
-        <th colSpan="2">
+        <th colSpan={2}>
           <div>
             <span>{leftpad(service.scheduledTime)}</span>
             <span>{service.destination}</span>
@@ -86,12 +92,12 @@ function renderService(service) {
         <td>{service.platform ? `Platform ${service.platform}` : 'Unknown platform'}</td>
         <td>{ontimeness}</td>
       </tr>
-      <tr><td colSpan="2">{service.operator}</td></tr>
+      <tr><td colSpan={2}>{service.operator}</td></tr>
     </tbody>
   );
 }
 
-function ontimenessMessage(scheduled, actual) {
+function ontimenessMessage(scheduled: number, actual: number) {
   if (actual === null || actual === undefined) {
     return 'Live data not available';
   } else if (scheduled === actual) {
@@ -108,8 +114,8 @@ function ontimenessMessage(scheduled, actual) {
   }
 }
 
-function leftpad(num) {
-  num = num.toString();
+function leftpad(number: number) {
+  const num = number.toString();
   return new Array(4 - num.length).fill('0').join('') + num;
 }
 
@@ -117,7 +123,7 @@ function leftpad(num) {
 // midnight, chronological order is not the same as comparison of times.
 // This assmues that, if one train is expected between 1800 and 2359, and
 // another is expected between 0000 and 0559, the first is sooner.
-function compTimes(t1, t2) {
+function compTimes(t1: number, t2: number) {
   const smaller = Math.min(t1, t2);
   const larger = Math.max(t1, t2);
 
@@ -126,6 +132,26 @@ function compTimes(t1, t2) {
   } else {
     return t1 - t2;
   }
+}
+
+interface ServicesProps {
+  trains: Trains;
+  arrivals: boolean;
+  numServices: number;
+  servicesPerPage: number;
+}
+
+interface Trains {
+  location: string;
+  services: List<Service>;
+}
+
+interface Service {
+  destination: string;
+  platform: string;
+  operator: string;
+  scheduledTime: number;
+  realTime: number;
 }
 
 export default Services;

@@ -1,8 +1,9 @@
 import React from 'react';
 
-class Clock extends React.PureComponent {
-  state = {
-    time: null,
+class Clock extends React.PureComponent<{}, ClockState> {
+  state: ClockState = {
+    time: '',
+    timer: undefined,
   };
 
   render() {
@@ -19,14 +20,14 @@ class Clock extends React.PureComponent {
     });
   }
 
-  formatTime(time) {
+  formatTime(time: Date) {
     return [time.getHours(), time.getMinutes(), time.getSeconds()]
       .map(num => num.toString())
       .map(this.leftpad)
       .join(':');
   }
 
-  leftpad(str) {
+  leftpad(str: string) {
     return str.length === 2 ? str : '0' + str;
   }
 
@@ -43,6 +44,11 @@ class Clock extends React.PureComponent {
       clearInterval(this.state.timer);
     }
   }
+}
+
+interface ClockState {
+  time: string;
+  timer?: any;
 }
 
 export default Clock;

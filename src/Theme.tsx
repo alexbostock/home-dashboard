@@ -1,6 +1,6 @@
 import React from 'react';
 
-function Theme(props) {
+function Theme(props: {themeKey: string}) {
   if (!props.themeKey || props.themeKey === 'light') {
     return null;
   } else {
