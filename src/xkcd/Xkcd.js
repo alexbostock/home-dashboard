@@ -33,12 +33,7 @@ class Xkcd extends React.PureComponent {
   }
 
   refresh = () => {
-    let url;
-    if (process.env.NODE_ENV === 'production') {
-      url = 'https://api.alexbostock.co.uk/xkcd/latest';
-    } else {
-      url = 'http://localhost:4000/xkcd/latest';
-    }
+    const url = 'https://api.alexbostock.co.uk/xkcd/latest';
 
     axios.get(url, { cancelToken: this.state.axiosCancelToken.token })
       .then(res => this.setState({comic: res.data}))
