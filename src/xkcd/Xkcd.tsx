@@ -1,9 +1,8 @@
 import React from 'react';
 import axios from 'axios';
 
-class Xkcd extends React.PureComponent {
-  state = {
-    comic: null,
+class Xkcd extends React.PureComponent<{}, XkcdState> {
+  state: XkcdState = {
     axiosCancelToken: axios.CancelToken.source(),
   };
 
@@ -59,6 +58,17 @@ class Xkcd extends React.PureComponent {
 
     this.state.axiosCancelToken.cancel('Cancelled on unmount');
   }
+}
+
+interface XkcdState {
+  comic?: {
+    title: string;
+    safe_title: string;
+    alt: string;
+    img: string;
+  };
+  axiosCancelToken: any;
+  timer?: any;
 }
 
 export default Xkcd;

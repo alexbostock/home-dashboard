@@ -66,7 +66,7 @@ function saveState(state) {
     localStorage.setItem('config', serialize(state));
     return true;
   } catch (err) {
-    console.err('Saving to local storage failed.');
+    console.error('Saving to local storage failed.');
     console.error(err);
     return false;
   }
