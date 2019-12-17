@@ -1,13 +1,12 @@
 import React from 'react';
-import { List, Map } from 'immutable';
 
-class BookmarksConf extends React.PureComponent<BookmarksConfProps, {}> {
+class BookmarksConfForm extends React.PureComponent {
   state = {
     newName: '',
     newUrl: 'https://',
   };
 
-  renderItem(item: Map<string, string>, index: number) {
+  renderItem(item, index) {
     if (item.has('name') && item.has('url')) {
       return (
         <li
@@ -22,7 +21,10 @@ class BookmarksConf extends React.PureComponent<BookmarksConfProps, {}> {
             {item.get('name')}
           </a>
 
-          <button type="button" onClick={() => this.removeBookmark(index)}>
+          <button
+            type="button"
+            onClick={() => this.props.removeBookmark(this.props.widgetIndex, index)}
+          >
             Delete
           </button>
         </li>
@@ -68,15 +70,10 @@ class BookmarksConf extends React.PureComponent<BookmarksConfProps, {}> {
     );
   }
 
-  addBookmark = (event: React.SyntheticEvent) => {
+  addBookmark = (event) => {
     event.preventDefault();
 
-    const newBookmark = Map({
-      name: this.state.newName,
-      url: this.state.newUrl,
-    });
-
-    this.props.updateState(this.props.items.push(newBookmark));
+    this.props.addBookmark(this.props.widgetIndex, this.state.newName, this.state.newUrl);
 
     this.setState({
       newName: '',
@@ -84,38 +81,18 @@ class BookmarksConf extends React.PureComponent<BookmarksConfProps, {}> {
     });
   }
 
-  removeBookmark(index: number) {
-    this.props.updateState(this.props.items.delete(index));
-  }
-
-  swapBookmarks(index1: number, index2: number) {
-    const bookmark1 = this.props.items.get(index1)!;
-    const bookmark2 = this.props.items.get(index2)!;
-
-    const bookmarks = this.props.items
-      .set(index2, bookmark1)
-      .set(index1, bookmark2);
-    
-    this.props.updateState(bookmarks);
-  }
-
-  onDragStart(event: React.DragEvent, index: number) {
+  onDragStart(event, index) {
     event.dataTransfer.setData('draggedIndex', index.toString());
     event.dataTransfer.setData('bookmark', true.toString());
   }
 
-  onDrop(event: React.DragEvent, index: number) {
+  onDrop(event, index) {
     event.preventDefault();
 
     const draggedIndex = event.dataTransfer.getData('draggedIndex');
 
-    this.swapBookmarks(parseInt(draggedIndex), index);
+    this.props.swapBookmarks(this.props.widgetIndex, parseInt(draggedIndex), index);
   }
 }
 
-interface BookmarksConfProps {
-  items: List<Map<string, string>>;
-  updateState(update: List<Map<string, string>>): void;
-}
-
-export default BookmarksConf;
+export default BookmarksConfForm;

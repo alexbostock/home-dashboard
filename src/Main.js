@@ -7,12 +7,6 @@ import GlobalConf from './GlobalConf';
 import Theme from './Theme';
 
 class Main extends React.PureComponent {
-  updateWidgetConfig = (index, update) => {
-    const newState = this.props.data
-      .setIn(['widgets', index], update);
-    this.props.updateState(newState);
-  }
-
   render() {
     const globalConfWidget = this.props.configMode ? <GlobalConf key="globalConf" />: null;
 
@@ -23,7 +17,6 @@ class Main extends React.PureComponent {
           config={config}
           index={i}
           configMode={this.props.configMode}
-          updateConfig={this.updateWidgetConfig}
           deleteWidget={this.props.removeWidget}
           swapWidgets={this.props.swapWidgets}
         />

@@ -7,8 +7,6 @@ const mapStateToProps = state => ({
   configMode: state.get('configMode'),
   widgets: state.getIn(['data', 'widgets']),
   theme: state.getIn(['data', 'theme']),
-  // TEMPORARY:
-  data: state.get('data'),
 });
 
 const mapDispatchToProps = dispatch => ({
@@ -19,8 +17,6 @@ const mapDispatchToProps = dispatch => ({
   setTheme: theme => dispatch(actions.setTheme(theme)),
   undo: () => dispatch(actions.undo()),
   redo: () => dispatch(actions.redo()),
-  // TEMP
-  updateState: state => dispatch(actions.updateState(state)),
 });
 
 export default connect(

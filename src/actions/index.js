@@ -83,7 +83,7 @@ export function setArrivals(widget, arrivals) {
 
 export function setNumServices(widget, numServices) {
   return {
-    type: SET_TRAIN_TIMES_ARRIVALS,
+    type: SET_TRAIN_TIMES_NUM_SERVICES,
     widgetIndex: widget,
     numServices,
   };
@@ -91,7 +91,7 @@ export function setNumServices(widget, numServices) {
 
 export function setServicesPerPage(widget, servicesPerPage) {
   return {
-    type: SET_TRAIN_TIMES_ARRIVALS,
+    type: SET_TRAIN_TIMES_SERVICES_PER_PAGE,
     widgetIndex: widget,
     servicesPerPage,
   };
@@ -133,14 +133,4 @@ export function toggleConfigMode() {
   return {
     type: TOGGLE_CONFIG_MODE,
   };
-}
-
-// TEMPORARY ACTION for transition period only
-export const UPDATE_STATE = 'UPDATE_STATE';
-
-export function updateState(state) {
-  return {
-    type: UPDATE_STATE,
-    data: state,
-  }
 }

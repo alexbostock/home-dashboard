@@ -12,7 +12,7 @@ class StationList {
   }
 
   refresh = () => {
-    if (!this.stations || Date.now() - this.lastFetched < this.ttl) {
+    if (!this.lastFetched || Date.now() - this.lastFetched < this.ttl) {
       this.fetchList();
     }
   }

@@ -13,6 +13,7 @@ const defaultState = Map({
 });
 
 export default function reduceAndSave(oldState, action) {
+  console.log(action);
   const state = reduce(oldState, action);
 
   stateManagement.saveState(state.get('data'));
@@ -39,7 +40,6 @@ function reduce(state = defaultState, action) {
     case actions.ADD_BOOKMARK:
     case actions.REMOVE_BOOKMARK:
     case actions.SWAP_BOOKMARKS:
-    case actions.UPDATE_STATE:
       return state
       .set('dataHistory', state.get('dataHistory').push(state.get('data')))
       .set('dataFuture', List())
@@ -81,9 +81,7 @@ function reduceUndoable(state, action) {
     case actions.SWAP_BOOKMARKS:
       const widget = state.getIn(['widgets', action.widgetIndex]);
       const reducedWidget = reduceWidget(widget, action);
-      return state.setIn(['widgets', action.index], reducedWidget);
-    case actions.UPDATE_STATE:
-      return action.data;
+      return state.setIn(['widgets', action.widgetIndex], reducedWidget);
     default:
       console.error('unexpected action');
       console.error(action);
@@ -115,16 +113,30 @@ function setTheme(state, action) {
 }
 
 function reduceWidget(widget, action) {
+  const validNum = num => 1 <= num && num < 100;
+
   switch (action.type) {
     case actions.SET_TRAIN_TIMES_STATION:
       return widget.set('station', action.station);
     case actions.SET_TRAIN_TIMES_ARRIVALS:
       return widget.set('arrivals', action.arrivals);
     case actions.SET_TRAIN_TIMES_NUM_SERVICES:
-      return widget.set('numServices', action.numServices);
+      if (validNum(action.numServices)) {
+        return widget.set('numServices', action.numServices);
+      } else {
+        return widget;
+      }
     case actions.SET_TRAIN_TIMES_SERVICES_PER_PAGE:
-      return widget.set('servicesPerPage', action.servicesPerPage);
+      if (validNum(action.servicesPerPage)) {
+        return widget.set('servicesPerPage', action.servicesPerPage);
+      } else {
+        return widget;
+      }
     case actions.ADD_BOOKMARK:
+      if (!action.name || !action.url) {
+        return widget;
+      }
+
       const newBookmark = Map({
         name: action.name,
         url: action.url,
@@ -134,8 +146,8 @@ function reduceWidget(widget, action) {
     case actions.REMOVE_BOOKMARK:
       return widget.deleteIn(['items', action.bookmarkIndex]);
     case actions.SWAP_BOOKMARKS:
-      const bookmark1 = widget.getIn(['items'], action.index1);
-      const bookmark2 = widget.getIn(['items'], action.index2);
+      const bookmark1 = widget.getIn(['items', action.index1]);
+      const bookmark2 = widget.getIn(['items', action.index2]);
 
       return widget
         .setIn(['items', action.index1], bookmark2)
