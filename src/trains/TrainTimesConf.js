@@ -1,6 +1,7 @@
 import React from 'react';
-import axios from 'axios';
 import { Map } from 'immutable';
+
+import stationsSource from './stationList';
 
 class TrainTimesConf extends React.PureComponent {
   state = {
@@ -8,13 +9,11 @@ class TrainTimesConf extends React.PureComponent {
     arrivals: Boolean(this.props.arrivals),
     numServices: this.props.numServices ? this.props.numServices : 3,
     servicesPerPage: this.props.servicesPerPage ? this.props.servicesPerPage : 3,
-    stations: {},
-    axiosCancelToken: axios.CancelToken.source(),
   };
 
   valid(crs = this.state.station) {
     crs = parsePrintedStation(crs);
-    return Boolean(this.state.stations[crs]);
+    return Boolean(stationsSource.stations[crs]);
   }
 
   unsavedChanges() {
@@ -30,7 +29,7 @@ class TrainTimesConf extends React.PureComponent {
   updateStation = (event) => {
     let value = event.target.value;
     if (this.valid(value)) {
-      value = printStation(value, this.state.stations[value]);
+      value = printStation(value, stationsSource.stations[value]);
     }
 
     this.setState({station: value}, () => {
@@ -81,7 +80,7 @@ class TrainTimesConf extends React.PureComponent {
 
   render() {
     const crs = this.state.station;
-    const station = printStation(crs, this.state.stations[crs]);
+    const station = printStation(crs, stationsSource.stations[crs]);
 
     // Get widget index to avoid rendering duplicate IDs.
     const widgetIndex = this.props.widgetIndex;
@@ -157,34 +156,14 @@ class TrainTimesConf extends React.PureComponent {
   }
 
   stationOptions() {
-    if (!this.state.stations) {
+    if (!stationsSource.stations) {
       return null;
     }
 
-    return Object.keys(this.state.stations).map((crs) => {
-      const val = printStation(crs, this.state.stations[crs]);
-      return <option value={val} key={crs + this.state.stations[crs]} />;
+    return Object.keys(stationsSource.stations).map((crs) => {
+      const val = printStation(crs, stationsSource.stations[crs]);
+      return <option value={val} key={crs + stationsSource.stations[crs]} />;
     });
-  }
-
-  componentDidMount() {
-    const url = 'https://api.alexbostock.co.uk/trains/stations';
-
-    axios.get(url, { cancelToken: this.state.axiosCancelToken.token })
-      .then((res) => {
-        const stations = {};
-        res.data.forEach((s) => stations[s.crs] = s.name);
-        this.setState({stations: stations});
-      })
-      .catch(err => {
-        if (err.message !== 'Cancelled on unmount') {
-          console.error(err);
-        }
-      });
-  }
-
-  componentWillUnmount() {
-    this.state.axiosCancelToken.cancel();
   }
 }
 
