@@ -6,8 +6,6 @@ import Widget from './Widget';
 import GlobalConf from './GlobalConf';
 import Theme from './Theme';
 
-import stateManagement from './stateManagement';
-
 class Main extends React.PureComponent {
   updateWidgetConfig = (index, update) => {
     const newState = this.props.data
@@ -15,37 +13,8 @@ class Main extends React.PureComponent {
     this.props.updateState(newState);
   }
 
-  undo = (event) => {
-    event.preventDefault();
-
-    this.props.undo();
-  }
-
-  redo = (event) => {
-    event.preventDefault();
-
-    this.props.redo();
-  }
-
   render() {
-    const globalConfWidget = (
-      <GlobalConf
-        key="globalConf"
-        render={this.props.configMode}
-
-        currentTheme={this.props.theme}
-        themes={stateManagement.themesAvailable}
-        setTheme={this.props.setTheme}
-
-        widgets={stateManagement.widgetsAvailable}
-        addWidget={this.props.addWidget}
-
-        canUndo={this.props.canUndo}
-        canRedo={this.props.canRedo}
-        undo={this.undo}
-        redo={this.redo}
-      />
-    );
+    const globalConfWidget = this.props.configMode ? <GlobalConf key="globalConf" />: null;
 
     const widgets = this.props.widgets
       .map((config, i) => (

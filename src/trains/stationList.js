@@ -3,7 +3,7 @@ import axios from 'axios';
 class StationList {
   constructor() {
     this.lastFetched = undefined;
-    this.stations = undefined;
+    this.stations = {};
     this.ttl = 60 * 60 * 1000;
 
     this.load();

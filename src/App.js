@@ -5,10 +5,8 @@ import * as actions from './actions';
 
 const mapStateToProps = state => ({
   configMode: state.get('configMode'),
-  theme: state.getIn(['data', 'theme']),
-  canUndo: state.get('dataHistory').count() > 0,
-  canRedo: state.get('dataFuture').count() > 0,
   widgets: state.getIn(['data', 'widgets']),
+  theme: state.getIn(['data', 'theme']),
   // TEMPORARY:
   data: state.get('data'),
 });
@@ -28,4 +26,4 @@ const mapDispatchToProps = dispatch => ({
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(Main)
+)(Main);
