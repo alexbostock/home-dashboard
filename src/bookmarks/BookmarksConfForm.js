@@ -82,16 +82,19 @@ class BookmarksConfForm extends React.PureComponent {
   }
 
   onDragStart(event, index) {
-    event.dataTransfer.setData('draggedIndex', index.toString());
-    event.dataTransfer.setData('bookmark', true.toString());
+    event.stopPropagation();
+
+    event.dataTransfer.setData('draggedBookmark', index.toString());
   }
 
   onDrop(event, index) {
-    event.preventDefault();
+    const draggedIndex = event.dataTransfer.getData('draggedBookmark');
 
-    const draggedIndex = event.dataTransfer.getData('draggedIndex');
-
-    this.props.swapBookmarks(this.props.widgetIndex, parseInt(draggedIndex), index);
+    if (draggedIndex) {
+      event.stopPropagation();
+      
+      this.props.swapBookmarks(this.props.widgetIndex, parseInt(draggedIndex), index);
+    }
   }
 }
 

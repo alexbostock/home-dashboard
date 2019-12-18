@@ -37,7 +37,7 @@ class StationList {
 
   load() {
     const state = localStorage.getItem('stationList');
-    if (state) {
+    if (state && state.stations) {
       this.stations = state.stations;
       this.lastFetched = state.fetched;
     }
