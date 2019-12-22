@@ -16,6 +16,7 @@ class TrainTimes extends React.PureComponent {
         trains={this.state.trains}
         arrivals={this.props.arrivals}
         numServices={this.props.numServices}
+        servicesPerPage={this.props.servicesPerPage}
       />;
     } else {
       body = <p>No station specified.</p>;
@@ -30,12 +31,7 @@ class TrainTimes extends React.PureComponent {
   }
 
   refresh = () => {
-    let baseURL
-    if (process.env.NODE_ENV === 'production') {
-      baseURL = 'https://api.alexbostock.co.uk/trains';
-    } else {
-      baseURL = 'http://localhost:4000/trains';
-    }
+    const baseURL = 'https://api.alexbostock.co.uk/trains';
 
     let endPoint = '/' + this.props.station + '/';
     endPoint += this.props.arrivals ? 'arrivals' : 'departures';

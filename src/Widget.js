@@ -26,6 +26,7 @@ function renderWidgetComponent(config) {
           station={config.get('station')}
           arrivals={config.get('arrivals')}
           numServices={config.get('numServices')}
+          servicesPerPage={config.get('servicesPerPage')}
         />
       );
     case 'xkcd':
@@ -36,15 +37,13 @@ function renderWidgetComponent(config) {
   }
 }
 
-function renderConfWidgetComponent(config, index, updateFunc) {
+function renderConfWidgetComponent(config, index) {
   switch (config.get('type')) {
     case 'bookmarks':
       return (
         <BookmarksConf
           items={config.get('items')}
-          updateState={update => {
-            updateFunc(index, config.set('items', update));
-          }}
+          widgetIndex={index}
         />
       );
     case 'clock':
@@ -55,7 +54,7 @@ function renderConfWidgetComponent(config, index, updateFunc) {
           station={config.get('station')}
           arrivals={config.get('arrivals')}
           numServices={config.get('numServices')}
-          updateState={update => updateFunc(index, update)}
+          servicesPerPage={config.get('servicesPerPage')}
           widgetIndex={index}
         />
       );
@@ -73,7 +72,7 @@ function Widget(props) {
 
   let widget;
   if (props.configMode) {
-    widget = renderConfWidgetComponent(config, index, props.updateConfig);
+    widget = renderConfWidgetComponent(config, index);
   } else {
     widget = renderWidgetComponent(config);
   }
@@ -102,30 +101,23 @@ function Widget(props) {
 }
 
 function onDragStart(event, index) {
-  if (event.dataTransfer.getData('bookmark')) {
-    return;
-  }
-
-  event.dataTransfer.setData('draggedIndex', index);
+  event.dataTransfer.setData('draggedWidget', index);
 }
 
 function onDrop(event, index, callback) {
   event.preventDefault();
 
-  if (event.dataTransfer.getData('bookmark')) {
-    return;
+  const draggedIndex = event.dataTransfer.getData('draggedWidget');
+
+  if (draggedIndex) {
+    callback(draggedIndex, index);
   }
-
-  const draggedIndex = event.dataTransfer.getData('draggedIndex');
-
-  callback(draggedIndex, index);
 }
 
 Widget.propTypes = {
   config: PropTypes.instanceOf(Map).isRequired,
   index: PropTypes.number.isRequired,
   configMode: PropTypes.bool.isRequired,
-  updateConfig: PropTypes.func.isRequired,
   deleteWidget: PropTypes.func.isRequired,
   swapWidgets: PropTypes.func.isRequired,
 }

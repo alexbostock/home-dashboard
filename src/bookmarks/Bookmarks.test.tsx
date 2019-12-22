@@ -4,7 +4,7 @@ import { act } from 'react-dom/test-utils';
 
 import { List, Map } from 'immutable';
 
-import Bookmarks from './bookmarks';
+import Bookmarks from './Bookmarks';
 import { isTSAnyKeyword, exportAllDeclaration } from '@babel/types';
 
 let container = null;

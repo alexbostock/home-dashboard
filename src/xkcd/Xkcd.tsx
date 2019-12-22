@@ -1,9 +1,8 @@
 import React from 'react';
 import axios from 'axios';
 
-class Xkcd extends React.PureComponent {
-  state = {
-    comic: null,
+class Xkcd extends React.PureComponent<{}, XkcdState> {
+  state: XkcdState = {
     axiosCancelToken: axios.CancelToken.source(),
   };
 
@@ -33,12 +32,7 @@ class Xkcd extends React.PureComponent {
   }
 
   refresh = () => {
-    let url;
-    if (process.env.NODE_ENV === 'production') {
-      url = 'https://api.alexbostock.co.uk/xkcd/latest';
-    } else {
-      url = 'http://localhost:4000/xkcd/latest';
-    }
+    const url = 'https://api.alexbostock.co.uk/xkcd/latest';
 
     axios.get(url, { cancelToken: this.state.axiosCancelToken.token })
       .then(res => this.setState({comic: res.data}))
@@ -64,6 +58,17 @@ class Xkcd extends React.PureComponent {
 
     this.state.axiosCancelToken.cancel('Cancelled on unmount');
   }
+}
+
+interface XkcdState {
+  comic?: {
+    title: string;
+    safe_title: string;
+    alt: string;
+    img: string;
+  };
+  axiosCancelToken: any;
+  timer?: any;
 }
 
 export default Xkcd;

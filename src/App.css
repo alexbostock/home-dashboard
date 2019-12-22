@@ -203,6 +203,28 @@ h3 {
     text-align: right;
 }
 
+.paginationControls {
+    display: flex;
+    margin-top: 1em;
+}
+
+.paginationControls > * {
+    margin: auto;
+}
+
+.paginationControls > button {
+    color: var(--main-colour);
+}
+
+.paginationControls > button:disabled {
+    color: var(--accent-colour);
+    border-color: var(--accent-colour);
+
+    cursor: default;
+
+    font-style: normal;
+}
+
 .globalConfForm {
     display: grid;
     grid-template-columns: 1fr 1fr;

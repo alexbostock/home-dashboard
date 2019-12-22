@@ -1,9 +1,11 @@
 import React from 'react';
 
-function renderBookmark(item) {
+import { List, Map } from 'immutable';
+
+function renderBookmark(item: Map<string, string>) {
   if (item.has('name') && item.has('url')) {
     return (
-      <li key={item} className="bookmark">
+      <li key={item.toString()} className="bookmark">
         <a href={item.get('url')}>
           {item.get('name')}
         </a>
@@ -16,7 +18,7 @@ function renderBookmark(item) {
   }
 }
 
-function Bookmarks(props) {
+function Bookmarks(props: BookmarksProps) {
   let body;
   if (props.items) {
     const items = props.items.map(renderBookmark);
@@ -31,6 +33,10 @@ function Bookmarks(props) {
       {body}
     </div>
   );
+}
+
+interface BookmarksProps {
+  items: List<Map<string, string>>;
 }
 
 export default Bookmarks;
