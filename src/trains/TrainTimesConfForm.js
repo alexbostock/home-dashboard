@@ -5,7 +5,9 @@ import stationsSource from './stationList';
 class TrainTimesConfForm extends React.PureComponent {
   state = {
     station: this.props.station || '',
-    timer: null,
+    arrivals: this.props.arrivals || false,
+    numServices: this.props.numServices || 3,
+    servicesPerPage: this.props.servicesPerPage || 3,
   };
 
   valid(crs = this.state.station) {
@@ -14,34 +16,59 @@ class TrainTimesConfForm extends React.PureComponent {
   }
 
   updateStation = (event) => {
-    if (this.state.timer) {
-      clearTimeout(this.state.timer);
-    }
-
-    this.setState({station: event.target.value}, () => {
-      if (!this.valid()) {
-        return;
-      }
-
-      const timer = setTimeout(() => {
-        const crs = parsePrintedStation(this.state.station);
-        this.props.saveStation(this.props.widgetIndex, crs);
-      }, 500);
-
-      this.setState({timer: timer})
-    });
+    this.setState({ station: event.target.value });
   }
 
   updateArrivals = (event) => {
-    this.props.saveArrivals(this.props.widgetIndex, Boolean(event.target.value));
+    this.setState({ arrivals: Boolean(event.target.value) });
   }
 
   updateNumServices = (event) => {
-    this.props.saveNumServices(this.props.widgetIndex, parseInt(event.target.value));
+    this.setState({ numServices: parseInt(event.target.value) });
   }
 
   updateServicesPerPage = (event) => {
-    this.props.savePageSize(this.props.widgetIndex, parseInt(event.target.value));
+    this.setState({ servicesPerPage: parseInt(event.target.value) });
+  }
+
+  componentWillUnmount() {
+    this.saveStation();
+    this.saveArrivals();
+    this.saveNumServices();
+    this.savePageSize();
+  }
+
+  saveStation() {
+    if (this.state.station === this.props.station) return;
+    if (!this.valid()) return;
+
+    const crs = parsePrintedStation(this.state.station);
+
+    this.props.saveStation(this.props.widgetIndex, crs);
+  }
+
+  saveArrivals() {
+    if (this.state.arrivals === this.props.arrivals) return;
+
+    this.props.saveArrivals(this.props.widgetIndex, this.state.arrivals);
+  }
+
+  saveNumServices() {
+    const num = this.state.numServices;
+    if (num === this.props.numServices) return;
+    if (isNaN(num)) return;
+    if (num < 1 || num > 99) return;
+
+    this.props.saveNumServices(this.props.widgetIndex, num);
+  }
+
+  savePageSize() {
+    const num = this.state.servicesPerPage;
+    if (num === this.props.servicesPerPage) return;
+    if (isNaN(num)) return;
+    if (num < 1 || num > 99) return;
+
+    this.props.savePageSize(this.props.widgetIndex, num);
   }
 
   render() {
@@ -77,7 +104,7 @@ class TrainTimesConfForm extends React.PureComponent {
             name="arrivals"
             id={'departuresButton' + widgetIndex}
             value=""
-            checked={!this.props.arrivals}
+            checked={!this.state.arrivals}
             onChange={this.updateArrivals}
           />
 
@@ -89,7 +116,7 @@ class TrainTimesConfForm extends React.PureComponent {
             name="arrivals"
             id={'arrivalsButton' + widgetIndex}
             value="truthy"
-            checked={this.props.arrivals}
+            checked={this.state.arrivals}
             onChange={this.updateArrivals}
           />
 
@@ -102,7 +129,7 @@ class TrainTimesConfForm extends React.PureComponent {
             step="1"
             min="1"
             max="99"
-            value={this.props.numServices}
+            value={this.state.numServices}
             onChange={this.updateNumServices}
           />
 
@@ -115,7 +142,7 @@ class TrainTimesConfForm extends React.PureComponent {
             step="1"
             min="1"
             max="99"
-            value={this.props.servicesPerPage}
+            value={this.state.servicesPerPage}
             onChange={this.updateServicesPerPage}
           />
         </form>
