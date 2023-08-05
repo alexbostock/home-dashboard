@@ -2,8 +2,6 @@
 
  A user-configurable dashboard homepage, similar to iGoogle.
 
- [Deployed here](https://home.alexbostock.co.uk).
-
 ![alt text](https://alexbostock.co.uk/home.png "Screenshot")
 
 Built using React, with some Redux and TypeScript.
